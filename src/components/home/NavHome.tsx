@@ -8,7 +8,7 @@ const NavHome: React.FC = () => {
     const dispatch = useDispatch();
     const { activeCategory } = useSelector((state: RootState)  => state.home);
 
-    const values: string[] = ['All', 'Comedy', 'Fantasy', 'Drama', 'History', 'Horror'];
+    const values: string[] = ['All', 'Comedy', 'Fantasy', 'Drama', 'Adventure', 'Horror'];
 
     return (
         <ul className={'home__ul'}>

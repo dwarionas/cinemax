@@ -1,44 +1,78 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
-import { homeRequest, setActiveItem, ISliderData } from "../../redux/slices/homeSlice";
+import { homeRequest, setActiveItem, categoryRequest, ISliderData } from "../../redux/slices/homeSlice";
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import HomeSlider from "./HomeSlider";
+import HomeMain from "./HomeMain";
 
 
 const HomeContent: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { sliderData, activeItem } = useSelector((state: RootState) => state.home);
+    const { sliderData, activeItem, activeCategory, popularMoviesData, popularTVData } = useSelector((state: RootState) => state.home);
 
     React.useEffect(() => {
-        dispatch(homeRequest())
-    }, []);
+        if (activeCategory === 0) {
+            dispatch(homeRequest(1));
+        } else {
+            dispatch(categoryRequest(1));
+        }
+    }, [activeCategory]);
+
+    const detectData = (): ISliderData[] => {
+        if (popularTVData && popularMoviesData) {
+            switch (activeCategory) {
+                case 1:
+                    return [...popularTVData, ...popularMoviesData]
+                        .filter((el, i) => el.genre_ids.includes(35))
+                        .sort((a, b) => b.vote_average - a.vote_average);
+                case 2:
+                    return [...popularTVData, ...popularMoviesData]
+                        .filter((el, i) => el.genre_ids.includes(14))
+                        .sort((a, b) => b.vote_average - a.vote_average);
+                case 3:
+                    return [...popularTVData, ...popularMoviesData]
+                        .filter((el, i) => el.genre_ids.includes(18))
+                        .sort((a, b) => b.vote_average - a.vote_average);
+                case 4:
+                    return [...popularTVData, ...popularMoviesData]
+                        .filter((el, i) => el.genre_ids.includes(12))
+                        .sort((a, b) => b.vote_average - a.vote_average);
+                case 5:
+                    return [...popularTVData, ...popularMoviesData]
+                        .filter((el, i) => el.genre_ids.includes(27))
+                        .sort((a, b) => b.vote_average - a.vote_average);
+                default:
+                    return sliderData;
+
+            }
+        } else {
+            return sliderData;
+        }
+    }
+
+    const data = detectData();
+
+    React.useEffect(() => {
+        if (data && data.length < 16) {
+
+        }
+    }, [data]);
 
     return (
         <div className={'home__content'}>
-            {sliderData && sliderData.filter((_, i) => i === activeItem).map((item) => (
-                <div className={'home__main'} key={item.id}>
-                    <span className={'home__main-header'}>{item.title || item.name}</span>
-                    <span className={'home__main-season'}>Season 1</span>
-                    <div className={'home__main-stars'}>stars</div>
-                    <span className={'home__main-genre'}>Crime | Drama | Mystery</span>
-                    <div className={'home__main-buttons'}>
-                        <button className={'home__main-buttons-watch'}>{'>'}</button>
-                        <button className={'home__main-buttons-plus'}>+</button>
-                    </div>
-                    <span className={'home__main-description'}>{item.overview}</span>
-                </div>
+            {data && data.filter((_, i) => i === activeItem).map((item) => (
+                <HomeMain item={item} key={item.id} />
             ))}
 
             <div className={'home__slider'}>
                 <Swiper slidesPerView={8} className={'home__swiper'} >
-                    {sliderData && sliderData.map((item, i) => (
+                    {data && data.map((item, i) => (
                         <SwiperSlide
                             key={item.id}
                             onClick={() => dispatch(setActiveItem(i))}

@@ -15,31 +15,51 @@ export interface ISliderData {
     release_date?: string;
     title: string;
     video?: boolean;
-    vote_average?: number;
+    vote_average: number;
     vote_count?: number;
     name?: string;
     origin_country?: string[];
+    media_type? : 'movie' | 'tv';
+    first_air_date?: string;
 }
 
 interface IState {
     activeCategory: number;
-    status: string;
-    sliderData: ISliderData[];
     activeItem: number;
+    sliderDataStatus: string;
+    sliderData: ISliderData[];
+    popularDataStatus: string;
+    popularMoviesData: ISliderData[];
+    popularTVData: ISliderData[];
 }
 
 const API_KEY = '3e9b52dbfb07553d4df2f99c97de61e7';
 
-export const homeRequest = createAsyncThunk('home/homeRequest', async () => {
-    const data = await axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`);
+export const homeRequest = createAsyncThunk('home/homeRequest', async (page: number) => {
+    const data = await axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=${page}`);
     return data.data.results;
+});
+
+export const categoryRequest = createAsyncThunk('home/categoryRequest', async (page: number) => {
+    const popularMovies = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
+    const popularTV = await axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
+
+    return {
+        popularMovies: popularMovies.data.results,
+        popularTV: popularTV.data.results
+    }
 });
 
 const initialState: IState = {
     activeCategory: 0,
-    status: '',
+    activeItem: 0,
+
+    sliderDataStatus: '',
     sliderData: [],
-    activeItem: 0
+
+    popularDataStatus: '',
+    popularMoviesData: [],
+    popularTVData: []
 }
 
 const homeSlice = createSlice({
@@ -56,16 +76,38 @@ const homeSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(homeRequest.pending, state => {
-                state.status = 'pending';
+                state.sliderDataStatus = 'pending';
                 state.sliderData = [];
+                state.popularMoviesData = [];
+                state.popularTVData = [];
             })
             .addCase(homeRequest.fulfilled, (state, action) => {
-                state.status = 'fulfilled';
+                state.sliderDataStatus = 'fulfilled';
                 state.sliderData = action.payload;
+                state.popularMoviesData = action.payload.popularMovies;
+                state.popularTVData = action.payload.popularTV;
             })
             .addCase(homeRequest.rejected, state => {
-                state.status = 'rejected';
+                state.sliderDataStatus = 'rejected';
                 state.sliderData = [];
+                state.popularMoviesData = [];
+                state.popularTVData = [];
+            })
+
+            .addCase(categoryRequest.pending, state => {
+                state.popularDataStatus = 'pending';
+                state.popularMoviesData = [];
+                state.popularTVData = [];
+            })
+            .addCase(categoryRequest.fulfilled, (state, action) => {
+                state.popularDataStatus = 'fulfilled';
+                state.popularMoviesData = action.payload.popularMovies;
+                state.popularTVData = action.payload.popularTV;
+            })
+            .addCase(categoryRequest.rejected, state => {
+                state.popularDataStatus = 'rejected';
+                state.popularMoviesData = [];
+                state.popularTVData = [];
             })
     }
 });

@@ -124,21 +124,25 @@
       }
     }
     &-description {
+      height: 100px;
       margin-top: 5px;
       color: #fff;
       font-size: 15px;
+      mask-image: linear-gradient(black 60%, transparent);
     }
   }
 
   &__slider {
+    //background-color: transparent;
     //height: 300px;
-    margin-top: 2%;
+    margin-top: 1%;
     &-inactive-img {
       border: 0.1px solid gray;
       display: block;
       margin: 0 auto;
       width: 150px;
       animation: imgAnim-end 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
     }
     &-active-img {
       border: 0.1px solid gray;
@@ -146,6 +150,7 @@
       margin: 0 auto;
       width: 95%;
       animation: imgAnim 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+
     }
     &-title-inactive, &-title-active {
       text-overflow: ellipsis;
@@ -178,8 +183,16 @@
   }
 }
 
+.swiper {
+  //opacity: 50%;
+}
+
 .swiper-wrapper {
   margin-top: 30px;
+}
+
+.swiper-slide {
+
 }
 
 .swiper-slide-active {
