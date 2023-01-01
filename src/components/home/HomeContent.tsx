@@ -16,16 +16,20 @@ const HomeContent: React.FC = () => {
     const dispatch = useAppDispatch();
     const { sliderData, activeItem, activeCategory, popularMoviesData, popularTVData } = useSelector((state: RootState) => state.home);
 
-    React.useEffect(() => {
+    const initialRequest = (page: number) => {
         if (activeCategory === 0) {
-            dispatch(homeRequest(1));
+            dispatch(homeRequest(page));
         } else {
-            dispatch(categoryRequest(1));
+            dispatch(categoryRequest(page));
         }
+    }
+
+    React.useEffect(() => {
+        initialRequest(1);
     }, [activeCategory]);
 
     const detectData = (): ISliderData[] => {
-        if (popularTVData && popularMoviesData) {
+        if (popularMoviesData && popularTVData) {
             switch (activeCategory) {
                 case 1:
                     return [...popularTVData, ...popularMoviesData]
@@ -57,12 +61,6 @@ const HomeContent: React.FC = () => {
     }
 
     const data = detectData();
-
-    React.useEffect(() => {
-        if (data && data.length < 16) {
-
-        }
-    }, [data]);
 
     return (
         <div className={'home__content'}>
