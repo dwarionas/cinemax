@@ -28,38 +28,22 @@ interface IState {
     activeItem: number;
     sliderDataStatus: string;
     sliderData: ISliderData[];
-    popularDataStatus: string;
-    popularMoviesData: ISliderData[];
-    popularTVData: ISliderData[];
 }
 
 const API_KEY = '3e9b52dbfb07553d4df2f99c97de61e7';
 
 export const homeRequest = createAsyncThunk('home/homeRequest', async (page: number) => {
-    const data = await axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=${page}`);
-    return data.data.results;
-});
-
-export const categoryRequest = createAsyncThunk('home/categoryRequest', async (page: number) => {
     const popularMovies = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
     const popularTV = await axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
 
-    return {
-        popularMovies: popularMovies.data.results,
-        popularTV: popularTV.data.results
-    }
+    return [...popularMovies.data.results, ...popularTV.data.results];
 });
 
 const initialState: IState = {
     activeCategory: 0,
     activeItem: 0,
-
     sliderDataStatus: '',
-    sliderData: [],
-
-    popularDataStatus: '',
-    popularMoviesData: [],
-    popularTVData: []
+    sliderData: []
 }
 
 const homeSlice = createSlice({
@@ -78,36 +62,14 @@ const homeSlice = createSlice({
             .addCase(homeRequest.pending, state => {
                 state.sliderDataStatus = 'pending';
                 state.sliderData = [];
-                state.popularMoviesData = [];
-                state.popularTVData = [];
             })
             .addCase(homeRequest.fulfilled, (state, action) => {
                 state.sliderDataStatus = 'fulfilled';
                 state.sliderData = action.payload;
-                state.popularMoviesData = action.payload.popularMovies;
-                state.popularTVData = action.payload.popularTV;
             })
             .addCase(homeRequest.rejected, state => {
                 state.sliderDataStatus = 'rejected';
                 state.sliderData = [];
-                state.popularMoviesData = [];
-                state.popularTVData = [];
-            })
-
-            .addCase(categoryRequest.pending, state => {
-                state.popularDataStatus = 'pending';
-                state.popularMoviesData = [];
-                state.popularTVData = [];
-            })
-            .addCase(categoryRequest.fulfilled, (state, action) => {
-                state.popularDataStatus = 'fulfilled';
-                state.popularMoviesData = action.payload.popularMovies;
-                state.popularTVData = action.payload.popularTV;
-            })
-            .addCase(categoryRequest.rejected, state => {
-                state.popularDataStatus = 'rejected';
-                state.popularMoviesData = [];
-                state.popularTVData = [];
             })
     }
 });
