@@ -11,42 +11,37 @@ import HomeSlider from "./HomeSlider";
 import HomeMain from "./HomeMain";
 
 const HomeContent: React.FC = () => {
-    let sortedArr: ISliderData[];
     const genres: number[] = [35, 14, 18, 12, 27];
 
     const dispatch = useAppDispatch();
-    const { sliderData, activeItem, activeCategory } = useSelector((state: RootState) => state.home);
+    const { sliderData, activeItem, activeCategory, sliderDataLoading } = useSelector((state: RootState) => state.home);
 
     React.useEffect(() => {
-        dispatch(homeRequest(1));
-    }, []);
-
-    const detectData = (): ISliderData[] => {
-        if (sliderData) {
-            genres.forEach((item, i) => {
-                if (activeCategory !== 0 && i === activeCategory - 1) {
-                    sortedArr = sliderData
-                        .filter(el => el.genre_ids.includes(item))
-                        .sort((a, b) => b.vote_average - a.vote_average);
-                }
-            });
+        if (activeCategory === 0) {
+            dispatch(homeRequest({
+                page: 1,
+                genre: ''
+            }));
+            console.log('null render');
+        } else {
+            const currentGenre = genres.filter((el, i) => i === activeCategory - 1).join('');
+            dispatch(homeRequest({
+                page: 1,
+                genre: String(currentGenre)
+            }));
+            console.log('other render');
         }
-
-        return sortedArr;
-    }
-
-    let data = activeCategory === 0 ? sliderData : detectData();
+    }, [activeCategory]);
 
     return (
         <div className={'home__content'}>
-            {data && data.filter((_, i) => i === activeItem).map((item) => (
+            {sliderDataLoading ? <>Loading...</> : sliderData.filter((_, i) => i === activeItem).map((item) => (
                 <HomeMain item={item} key={item.id} />
             ))}
 
-
             <div className={'home__slider'}>
                 <Swiper slidesPerView={8} className={'home__swiper'} >
-                    {data && data.map((item, i) => (
+                    {sliderDataLoading ? <>Loading...</> : sliderData.map((item, i) => (
                         <SwiperSlide
                             key={item.id}
                             onClick={() => dispatch(setActiveItem(i))}

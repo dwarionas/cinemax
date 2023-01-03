@@ -26,15 +26,24 @@ export interface ISliderData {
 interface IState {
     activeCategory: number;
     activeItem: number;
-    sliderDataStatus: string;
+    sliderDataLoading: boolean;
     sliderData: ISliderData[];
+}
+
+interface IRequestProps {
+    page: number;
+    genre: string;
 }
 
 const API_KEY = '3e9b52dbfb07553d4df2f99c97de61e7';
 
-export const homeRequest = createAsyncThunk('home/homeRequest', async (page: number) => {
-    const popularMovies = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
-    const popularTV = await axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
+export const homeRequest = createAsyncThunk('home/homeRequest', async (props: IRequestProps) => {
+    const { page, genre } = props;
+
+    const popularMovies =
+        await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`);
+    const popularTV =
+        await axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genre}`);
 
     return [...popularMovies.data.results, ...popularTV.data.results];
 });
@@ -42,7 +51,7 @@ export const homeRequest = createAsyncThunk('home/homeRequest', async (page: num
 const initialState: IState = {
     activeCategory: 0,
     activeItem: 0,
-    sliderDataStatus: '',
+    sliderDataLoading: false,
     sliderData: []
 }
 
@@ -60,15 +69,15 @@ const homeSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(homeRequest.pending, state => {
-                state.sliderDataStatus = 'pending';
+                state.sliderDataLoading = true;
                 state.sliderData = [];
             })
             .addCase(homeRequest.fulfilled, (state, action) => {
-                state.sliderDataStatus = 'fulfilled';
+                state.sliderDataLoading = false;
                 state.sliderData = action.payload;
             })
             .addCase(homeRequest.rejected, state => {
-                state.sliderDataStatus = 'rejected';
+                state.sliderDataLoading = false;
                 state.sliderData = [];
             })
     }
