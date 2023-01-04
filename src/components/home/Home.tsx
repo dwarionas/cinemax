@@ -7,8 +7,6 @@ import HomeContent from "./HomeContent";
 const Home: React.FC = () => {
     return (
         <div className={'home'}>
-            {/*<header className={'home__header'}>My cinema</header>*/}
-
             <NavHome/>
 
             <HomeContent/>

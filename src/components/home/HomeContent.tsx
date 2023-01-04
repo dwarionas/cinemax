@@ -22,7 +22,7 @@ const HomeContent: React.FC = () => {
                 page: 1,
                 genre: ''
             }));
-            console.log('null render');
+            console.log('all render');
         } else {
             const currentGenre = genres.filter((el, i) => i === activeCategory - 1).join('');
             dispatch(homeRequest({
@@ -33,19 +33,21 @@ const HomeContent: React.FC = () => {
         }
     }, [activeCategory]);
 
+
+
     return (
         <div className={'home__content'}>
-            {sliderDataLoading ? <>Loading...</> : sliderData.filter((_, i) => i === activeItem).map((item) => (
+            {sliderData && sliderData.filter((_, i) => i === activeItem).map((item) => (
                 <HomeMain item={item} key={item.id} />
             ))}
 
             <div className={'home__slider'}>
                 <Swiper slidesPerView={8} className={'home__swiper'} >
-                    {sliderDataLoading ? <>Loading...</> : sliderData.map((item, i) => (
+                    {sliderData && sliderData.map((item, i) => (
                         <SwiperSlide
                             key={item.id}
                             onClick={() => dispatch(setActiveItem(i))}
-                            className={i === activeItem ? 'home-active-block' : 'home-inactive-block'}
+                            className={i === activeItem ? 'home-active-block' : ''}
                             title={item.title || item.name}
                         >
                             <HomeSlider

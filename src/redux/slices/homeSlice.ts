@@ -72,7 +72,7 @@ const homeSlice = createSlice({
                 state.sliderDataLoading = true;
                 state.sliderData = [];
             })
-            .addCase(homeRequest.fulfilled, (state, action) => {
+            .addCase(homeRequest.fulfilled, (state, action: PayloadAction<ISliderData[]>) => {
                 state.sliderDataLoading = false;
                 state.sliderData = action.payload;
             })

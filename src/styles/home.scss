@@ -40,13 +40,6 @@
   height: 100vh;
   padding: 25px 20px;
 
-
-
-  //&__header {
-  //  color: #fff;
-  //  font-size: 40px;
-  //}
-
   &__ul {
     display: flex;
     justify-content: space-between;
@@ -58,7 +51,7 @@
       background-color: #282C31;
       width: 150px;
       height: 50px;
-      border-radius: 20px;
+      border-radius: 15px;
       color: #fff;
       text-decoration: none;
       line-height: 50px;
@@ -72,7 +65,7 @@
         background-color: #F37515;
         width: 150px;
         height: 50px;
-        border-radius: 20px;
+        border-radius: 15px;
         color: #fff;
         text-decoration: none;
         line-height: 50px;
@@ -87,23 +80,22 @@
   }
 
   &__content {
-    height: 100%;
+    position: relative;
+    height: 100vh;
     padding-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
   }
 
   &__main {
+    z-index: 10;
     width: 30%;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
 
     &-header {
-      width: 200%;
+      width: 500%;
       color: #fff;
-      font-size: 50px;
+      font-size: 40px;
     }
     &-season, &-genre, &-stars {
       margin-top: 5px;
@@ -128,14 +120,18 @@
       margin-top: 5px;
       color: #fff;
       font-size: 15px;
-      mask-image: linear-gradient(black 60%, transparent);
     }
   }
 
   &__slider {
-    //background-color: transparent;
-    //height: 300px;
-    margin-top: 1%;
+    position: absolute;
+    bottom: 80px;
+    width: 100%;
+    z-index: 100;
+    background-color: #1F2326;
+    box-shadow: 0px 0px 40px 40px #1F2326;
+    height: 300px;
+
     &-inactive-img {
       border: 0.1px solid gray;
       display: block;
@@ -162,12 +158,12 @@
     &-title-inactive {
       width: 155px;
       color: gray;
-      animation: textAnim-end 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: textAnim-end 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
     &-title-active {
       width: 95%;
       color: white;
-      animation: textAnim 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: textAnim 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
   }
 
@@ -179,12 +175,12 @@
 
   }
   &-inactive-block {
-    //transform: none;
+
   }
 }
 
 .swiper {
-  //opacity: 50%;
+
 }
 
 .swiper-wrapper {
