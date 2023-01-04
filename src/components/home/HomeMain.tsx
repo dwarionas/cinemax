@@ -7,25 +7,11 @@ interface IProps {
 }
 
 const HomeMain: React.FC<IProps> = ({ item }) => {
-    const yellow = '#F9B601';
-    const grey = '#9b9b9b';
-
     return (
         <div className={'home__main'} >
             <span className={'home__main-header'}>{item.title || item.name}</span>
             <span className={'home__main-season'}>Season 1</span>
-            <div className={'home__main-stars'}>
-                {
-                    [...Array(Math.round(item.vote_average / 2))].map(x => ++x).map(() => (
-                        <Star color={yellow} />
-                    ))
-                }
-                {
-                    [...Array(5 - Math.round(item.vote_average / 2))].map(x => ++x).map(() => (
-                        <Star color={grey} />
-                    ))
-                }
-            </div>
+            <Star rate={item.vote_average} />
             <span className={'home__main-genre'}>Crime | Drama | Mystery</span>
             <div className={'home__main-buttons'}>
                 <button className={'home__main-buttons-watch'}>{'>'}</button>

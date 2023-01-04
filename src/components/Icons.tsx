@@ -56,10 +56,27 @@ export const Logout = ({color}) => {
 }
 
 // @ts-ignore
-export const Star = ({color}) => {
+export const Star = ({rate}) => {
+    const yellow = '#F9B601';
+    const grey = '#9b9b9b';
+
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{marginRight: '4px'}}>
-            <path fill={color} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z"/>
-        </svg>
+        <div className={'home__main-stars'}>
+            {
+                [...Array(Math.round(rate / 2))].map(x => ++x).map(() => (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{marginRight: '4px'}}>
+                        <path fill={yellow} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z"/>
+                    </svg>
+                ))
+            }
+            {
+                [...Array(5 - Math.round(rate / 2))].map(x => ++x).map(() => (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{marginRight: '4px'}}>
+                        <path fill={grey} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z"/>
+                    </svg>
+                ))
+            }
+        </div>
     )
 }
+
