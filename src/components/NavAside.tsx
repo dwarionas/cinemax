@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import { Home, Profile, Recent, Search, Settings, Logout } from "./Icons";
+import { Home, Profile, Recent, Search, Settings, Logout } from "./AuxiliaryComponents";
 
 const NavAside: React.FC = () => {
     return (
@@ -13,15 +13,9 @@ const NavAside: React.FC = () => {
                 />
 
                 <NavLink
-                    to={'/profile'}
+                    to={'/search'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <Profile color={isActive ? '#fff' : '#56585C'} />}
-                />
-
-                <NavLink
-                    to={'/settings'}
-                    className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <Settings color={isActive ? '#fff' : '#56585C'} />}
+                    children={({isActive}) => <Search color={isActive ? '#fff' : '#56585C'} />}
                 />
 
                 <NavLink
@@ -31,9 +25,15 @@ const NavAside: React.FC = () => {
                 />
 
                 <NavLink
-                    to={'/search'}
+                    to={'/profile'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <Search color={isActive ? '#fff' : '#56585C'} />}
+                    children={({isActive}) => <Profile color={isActive ? '#fff' : '#56585C'} />}
+                />
+
+                <NavLink
+                    to={'/settings'}
+                    className={'app__nav__wrapper__item'}
+                    children={({isActive}) => <Settings color={isActive ? '#fff' : '#56585C'} />}
                 />
             </div>
             <div className={'app__nav__logout'}>

@@ -2,32 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from '@reduxjs/toolkit'
 import axios from "axios";
 
-export interface ISliderData {
-    adult?: boolean;
-    backdrop_path: string | null;
-    genre_ids: number[];
-    id: number;
-    original_language?: string;
-    original_title?: string;
-    overview?: string;
-    popularity?: number;
-    poster_path?: string | null;
-    release_date?: string;
-    title: string;
-    video?: boolean;
-    vote_average: number;
-    vote_count?: number;
-    name?: string;
-    origin_country?: string[];
-    media_type? : 'movie' | 'tv';
-    first_air_date?: string;
-}
+import { ISliderData, IGenre } from "../../types/types";
 
 interface IState {
     activeCategory: number;
     activeItem: number;
     sliderDataLoading: boolean;
     sliderData: ISliderData[];
+    genresList: IGenre[];
 }
 
 interface IRequestProps {
@@ -48,11 +30,20 @@ export const homeRequest = createAsyncThunk('home/homeRequest', async (props: IR
     return [...popularMovies.data.results, ...popularTV.data.results];
 });
 
+export const genresRequest = createAsyncThunk('home/genreRequest', async () => {
+    const movieGenres = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`);
+    const tvGenres = await axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}`);
+
+    return [...movieGenres.data.genres, ...tvGenres.data.genres]
+        .filter((value, index, self) => self.findIndex(el => el.id === value.id) === index);
+});
+
 const initialState: IState = {
     activeCategory: 0,
     activeItem: 0,
     sliderDataLoading: false,
-    sliderData: []
+    sliderData: [],
+    genresList: []
 }
 
 const homeSlice = createSlice({
@@ -72,13 +63,17 @@ const homeSlice = createSlice({
                 state.sliderDataLoading = true;
                 state.sliderData = [];
             })
-            .addCase(homeRequest.fulfilled, (state, action: PayloadAction<ISliderData[]>) => {
+            .addCase(homeRequest.fulfilled, (state, action) => {
                 state.sliderDataLoading = false;
                 state.sliderData = action.payload;
             })
             .addCase(homeRequest.rejected, state => {
                 state.sliderDataLoading = false;
                 state.sliderData = [];
+            })
+
+            .addCase(genresRequest.fulfilled, (state, action) => {
+                state.genresList = action.payload;
             })
     }
 });

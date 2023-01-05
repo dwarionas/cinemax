@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
-import { homeRequest, setActiveItem, ISliderData } from "../../redux/slices/homeSlice";
+import { homeRequest, setActiveItem, genresRequest } from "../../redux/slices/homeSlice";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 import HomeSlider from "./HomeSlider";
 import HomeMain from "./HomeMain";
 
@@ -14,7 +12,11 @@ const HomeContent: React.FC = () => {
     const genres: number[] = [35, 14, 18, 12, 27];
 
     const dispatch = useAppDispatch();
-    const { sliderData, activeItem, activeCategory, sliderDataLoading } = useSelector((state: RootState) => state.home);
+    const { sliderData, activeItem, activeCategory } = useSelector((state: RootState) => state.home);
+
+    React.useEffect(() => {
+        dispatch(genresRequest())
+    }, []);
 
     React.useEffect(() => {
         if (activeCategory === 0) {
@@ -22,14 +24,12 @@ const HomeContent: React.FC = () => {
                 page: 1,
                 genre: ''
             }));
-            console.log('all render');
         } else {
             const currentGenre = genres.filter((el, i) => i === activeCategory - 1).join('');
             dispatch(homeRequest({
                 page: 1,
                 genre: String(currentGenre)
             }));
-            console.log('other render');
         }
     }, [activeCategory]);
 
@@ -38,7 +38,7 @@ const HomeContent: React.FC = () => {
     return (
         <div className={'home__content'}>
             {sliderData && sliderData.filter((_, i) => i === activeItem).map((item) => (
-                <HomeMain item={item} key={item.id} />
+                <HomeMain item={item} key={item.id}/>
             ))}
 
             <div className={'home__slider'}>

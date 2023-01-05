@@ -1,6 +1,6 @@
 import React from 'react';
-import { ISliderData } from "../../redux/slices/homeSlice";
-import { Star } from "../Icons";
+import { IGenre, ISliderData } from "../../types/types";
+import { Star, Play, Plus, DetectGenres } from "../AuxiliaryComponents";
 
 interface IProps {
     item: ISliderData;
@@ -10,12 +10,11 @@ const HomeMain: React.FC<IProps> = ({ item }) => {
     return (
         <div className={'home__main'} >
             <span className={'home__main-header'}>{item.title || item.name}</span>
-            <span className={'home__main-season'}>Season 1</span>
             <Star rate={item.vote_average} />
-            <span className={'home__main-genre'}>Crime | Drama | Mystery</span>
+            <DetectGenres genresArray={item.genre_ids}/>
             <div className={'home__main-buttons'}>
-                <button className={'home__main-buttons-watch'}>{'>'}</button>
-                <button className={'home__main-buttons-plus'}>+</button>
+                <Play/>
+                <Plus/>
             </div>
             <span className={'home__main-description'}>{item.overview}</span>
         </div>
