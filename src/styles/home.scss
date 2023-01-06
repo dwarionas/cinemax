@@ -1,3 +1,7 @@
+$base-color: #104847;
+$base-color-active: #14C6B0;
+$base-color-inactive: #282C31;
+
 @keyframes imgAnim {
   0% {
     transform: scale(0.9);
@@ -47,11 +51,11 @@
     text-align: center;
     vertical-align: middle;
 
-    &__li {
-      background-color: #282C31;
+    &__li, &__li__active {
+      background-color: $base-color-inactive;
       width: 150px;
       height: 50px;
-      border-radius: 15px;
+      border-radius: 5px;
       color: #fff;
       text-decoration: none;
       line-height: 50px;
@@ -62,15 +66,7 @@
       }
 
       &__active {
-        background-color: #F37515;
-        width: 150px;
-        height: 50px;
-        border-radius: 15px;
-        color: #fff;
-        text-decoration: none;
-        line-height: 50px;
-        margin-right: 20px;
-        cursor: pointer;
+        background-color: $base-color-active;
         &:last-child {
           margin-right: 0px;
         }
@@ -113,17 +109,27 @@
     &-button {
       width: 70px;
       height: 55px;
-      margin-right: 5px;
+      //margin-right: 5px;
       background-color: transparent;
-      border-radius: 10px;
       border: 0.1px solid gray;
       display: flex;
       justify-content: center;
       align-items: center;
-
       &:hover {
-        background-color: #F37515;
+        background-color: $base-color-inactive;
         cursor: pointer;
+      }
+      &:first-child {
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+        background-color: $base-color-active;
+        &:active {
+          background-color: $base-color;
+        }
+      }
+      &:last-child {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
       }
     }
     &-description {
@@ -176,9 +182,6 @@
     }
   }
 
-  &__swiper {
-
-  }
   &-active-block {
     transform: translateY(-25px);
 
@@ -188,26 +191,6 @@
   }
 }
 
-.swiper {
-
-}
-
 .swiper-wrapper {
   margin-top: 30px;
 }
-
-.swiper-slide {
-
-}
-
-.swiper-slide-active {
-
-}
-
-//.anim-inactive {
-//  animation: imgAnim-end 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
-//}
-//
-//.anim-active {
-//  animation: imgAnim 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) none;
-//}
