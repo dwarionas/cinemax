@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
 import { homeRequest, setActiveItem, genresRequest } from "../../redux/slices/homeSlice";
+import { preventAnim } from "../AuxiliaryComponents";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -12,10 +13,11 @@ const HomeContent: React.FC = () => {
     const genres: number[] = [35, 14, 18, 12, 27];
 
     const dispatch = useAppDispatch();
-    const { sliderData, activeItem, activeCategory } = useSelector((state: RootState) => state.home);
+    const { sliderData, activeItem, activeCategory, sliderDataLoading } = useSelector((state: RootState) => state.home);
 
     React.useEffect(() => {
         dispatch(genresRequest())
+        preventAnim();
     }, []);
 
     React.useEffect(() => {
@@ -28,12 +30,10 @@ const HomeContent: React.FC = () => {
             const currentGenre = genres.filter((el, i) => i === activeCategory - 1).join('');
             dispatch(homeRequest({
                 page: 1,
-                genre: String(currentGenre)
+                genre: currentGenre
             }));
         }
     }, [activeCategory]);
-
-
 
     return (
         <div className={'home__content'}>
@@ -55,7 +55,7 @@ const HomeContent: React.FC = () => {
                                 title={item.title as string || item.name as string}
                                 key={item.id}
                                 imgClassName={i === activeItem ? 'home__slider-active-img' : 'home__slider-inactive-img'}
-                                titleClassName={i === activeItem ? 'home__slider-title-active' : 'home__slider-title-inactive'}
+                                titleClassName={i === activeItem ? 'home__slider-title-active' : 'home__slider-title-inactive '}
                             />
                         </SwiperSlide>
                     ))}

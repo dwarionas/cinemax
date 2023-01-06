@@ -5,3 +5,7 @@
   box-sizing: border-box;
 }
 
+body.preload * {
+  animation-duration: 0s !important;
+  -webkit-animation-duration: 0s !important;
+}

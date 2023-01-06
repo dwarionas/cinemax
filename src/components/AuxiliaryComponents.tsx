@@ -1,5 +1,4 @@
 import React from 'react';
-import { IGenre } from "../types/types";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
@@ -127,3 +126,8 @@ export const DetectGenres: React.FC<IDetectGenresProps> = ({genresArray}) => {
     )
 }
 
+export const preventAnim = () => {
+    const body = document.querySelector('body')  as HTMLBodyElement;
+    body.classList.add('preload');
+    setTimeout(() => body.classList.remove('preload'), 500);
+}

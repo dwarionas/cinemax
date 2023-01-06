@@ -143,21 +143,19 @@
     box-shadow: 0px 0px 40px 40px #1F2326;
     height: 300px;
 
-    &-inactive-img {
+    &-inactive-img, &-active-img {
       border: 0.1px solid gray;
       display: block;
       margin: 0 auto;
-      width: 150px;
-      animation: imgAnim-end 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
 
+    &-inactive-img {
+      width: 150px;
+      animation: imgAnim-end 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
     }
     &-active-img {
-      border: 0.1px solid gray;
-      display: block;
-      margin: 0 auto;
-      width: 95%;
-      animation: imgAnim 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-
+      width: 168px;
+      animation: imgAnim 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) none;
     }
     &-title-inactive, &-title-active {
       text-overflow: ellipsis;
@@ -169,12 +167,12 @@
     &-title-inactive {
       width: 155px;
       color: gray;
-      animation: textAnim-end 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: textAnim-end 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
     &-title-active {
       width: 95%;
       color: white;
-      animation: textAnim 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: textAnim 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     }
   }
 
@@ -205,3 +203,11 @@
 .swiper-slide-active {
 
 }
+
+//.anim-inactive {
+//  animation: imgAnim-end 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
+//}
+//
+//.anim-active {
+//  animation: imgAnim 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) none;
+//}

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from '../../redux/store'
-
 import { setActiveCategory, setActiveItem } from "../../redux/slices/homeSlice";
+import { preventAnim } from "../AuxiliaryComponents";
+
 
 const values: string[] = ['All', 'Comedy', 'Fantasy', 'Drama', 'Adventure', 'Horror'];
 
@@ -11,8 +12,9 @@ const NavHome: React.FC = () => {
     const { activeCategory } = useSelector((state: RootState)  => state.home);
 
     const changeCategory = (i: number): void => {
-        dispatch(setActiveCategory(i))
-        dispatch(setActiveItem(0))
+        dispatch(setActiveCategory(i));
+        dispatch(setActiveItem(0));
+        preventAnim();
     }
 
     return (
