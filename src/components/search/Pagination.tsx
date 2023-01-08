@@ -6,9 +6,10 @@ import { setCurrentPage } from "../../redux/slices/searchSlice";
 
 interface IProps {
     onChangePage: (e: number) => void;
+    setLocalPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Pagination: React.FC<IProps> = ({ onChangePage }) => {
+const Pagination: React.FC<IProps> = ({ onChangePage, setLocalPage }) => {
     const dispatch = useAppDispatch();
     const { searchTotalPages } = useSelector((state: RootState) => state.search);
 
@@ -19,6 +20,7 @@ const Pagination: React.FC<IProps> = ({ onChangePage }) => {
             nextLabel=">"
             previousLabel="<"
             onPageChange={(e) => {
+                setLocalPage(e.selected + 1)
                 onChangePage(e.selected + 1)
                 dispatch(setCurrentPage(e.selected + 1))
             }}

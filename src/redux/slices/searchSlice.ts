@@ -13,6 +13,7 @@ interface IState {
     currentPage: number;
     searchLoading: boolean;
     searchData: IData[];
+    slicedSearchData: IData[];
     searchTotalPages: number;
     searchTotalResults: number;
     recommendationData: IData[];
@@ -25,7 +26,15 @@ export const searchRequest = createAsyncThunk('search/searchRequest', async (pro
 
     const searchResponse = await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${searchQuery}&page=${page}&language=en-US`);
 
-    return searchResponse.data;
+    return searchResponse.data
+});
+
+export const searchSliceRequest = createAsyncThunk('search/searchSliceRequest', async (props: IRequestProps) => {
+    const { searchQuery, page } = props;
+
+    const searchSliceResponse = await axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${searchQuery}&page=${page}&language=en-US`);
+
+    return searchSliceResponse.data.results.slice(0, 4)
 });
 
 export const recommendationRequest = createAsyncThunk('search/recommendationRequest', async () => {
@@ -39,6 +48,7 @@ const initialState: IState = {
     currentPage: 1,
     searchLoading: false,
     searchData: [],
+    slicedSearchData: [],
     searchTotalPages: 0,
     searchTotalResults: 0,
     recommendationData: [],
@@ -74,6 +84,10 @@ const searchSlice = createSlice({
 
             .addCase(recommendationRequest.fulfilled, (state, action) => {
                 state.recommendationData = action.payload;
+            })
+
+            .addCase(searchSliceRequest.fulfilled, (state, action) => {
+                state.slicedSearchData = action.payload;
             })
     }
 });
