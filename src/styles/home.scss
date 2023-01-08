@@ -109,7 +109,6 @@ $base-color-inactive: #282C31;
     &-button {
       width: 70px;
       height: 55px;
-      //margin-right: 5px;
       background-color: transparent;
       border: 0.1px solid gray;
       display: flex;
@@ -120,6 +119,7 @@ $base-color-inactive: #282C31;
         cursor: pointer;
       }
       &:first-child {
+        border: none;
         border-bottom-left-radius: 5px;
         border-top-left-radius: 5px;
         background-color: $base-color-active;
@@ -130,6 +130,7 @@ $base-color-inactive: #282C31;
       &:last-child {
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;
+        border-left-color: transparent;
       }
     }
     &-description {

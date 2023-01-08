@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from '@reduxjs/toolkit'
 import axios from "axios";
 
-import { ISliderData, IGenre } from "../../types/types";
+import { IData, IGenre } from "../../types";
 
 interface IState {
     activeCategory: number;
     activeItem: number;
     sliderDataLoading: boolean;
-    sliderData: ISliderData[];
+    sliderData: IData[];
     genresList: IGenre[];
 }
 

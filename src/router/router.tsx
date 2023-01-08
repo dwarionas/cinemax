@@ -6,7 +6,7 @@ import Home from '../components/home/Home';
 import Profile from "../components/Profile";
 import Settings from "../components/Settings";
 import Recent from "../components/Recent";
-import Search from "../components/Search";
+import Search from "../components/search/Search";
 
 const router = createBrowserRouter([
     {

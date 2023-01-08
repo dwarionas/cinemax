@@ -1,4 +1,4 @@
-export interface ISliderData {
+export interface IData {
     adult?: boolean;
     backdrop_path: string | null;
     genre_ids: number[];

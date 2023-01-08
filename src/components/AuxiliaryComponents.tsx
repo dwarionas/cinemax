@@ -18,7 +18,7 @@ const width = '35px';
 const height = '35px';
 
 
-export const Home: React.FC<ISVGProps> = ({color}) => {
+export const HomeIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
             <path fill={color}
@@ -27,7 +27,7 @@ export const Home: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
-export const Profile: React.FC<ISVGProps> = ({color}) => {
+export const ProfileIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
             <path fill={color}
@@ -35,7 +35,7 @@ export const Profile: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
-export const Recent: React.FC<ISVGProps> = ({color}) => {
+export const RecentIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg width={width} height={height} viewBox="0 0 24 24" id="_24x24_On_Light_Recent" data-name="24x24/On Light/Recent" xmlns="http://www.w3.org/2000/svg">
             <rect id="view-box" width="24" height="24" fill="none"/>
@@ -45,7 +45,7 @@ export const Recent: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
-export const Search: React.FC<ISVGProps> = ({color}) => {
+export const SearchIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
             <path fill={color}
@@ -53,7 +53,7 @@ export const Search: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
-export const Settings: React.FC<ISVGProps> = ({color}) => {
+export const SettingsIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" width={width} height={height}>
             <path fill={color}
@@ -61,7 +61,7 @@ export const Settings: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
-export const Logout: React.FC<ISVGProps> = ({color}) => {
+export const LogoutIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
             <path fill={color}
@@ -69,7 +69,7 @@ export const Logout: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
-export const Play: React.FC = ({}) => {
+export const PlayIcon: React.FC = ({}) => {
     return (
         <button className={'home__main-button'}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
@@ -79,7 +79,7 @@ export const Play: React.FC = ({}) => {
     )
 }
 
-export const Plus: React.FC = ({}) => {
+export const PlusIcon: React.FC = ({}) => {
     return (
         <button className={'home__main-button'}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
@@ -89,8 +89,7 @@ export const Plus: React.FC = ({}) => {
     )
 }
 
-
-export const Star: React.FC<IStarProps> = ({rate}) => {
+export const StarIcon: React.FC<IStarProps> = ({rate}) => {
     const yellow = '#F9B601';
     const grey = '#9b9b9b';
 
@@ -127,7 +126,7 @@ export const DetectGenres: React.FC<IDetectGenresProps> = ({genresArray}) => {
 }
 
 export const preventAnim = () => {
-    const body = document.querySelector('body')  as HTMLBodyElement;
+    const body = document.querySelector('body') as HTMLBodyElement;
     body.classList.add('preload');
     setTimeout(() => body.classList.remove('preload'), 500);
 }

@@ -1,0 +1,35 @@
+.search {
+  height: 100vh;
+  padding: 25px 20px;
+  color: #fff;
+
+  &__form {
+    display: flex;
+
+    &-input-wrapper {}
+
+    &-input {}
+
+    &-ul {
+      &-li {
+        list-style-type: none;
+      }
+    }
+
+    &-btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+  }
+
+  &__pagination {
+    display: flex;
+    li {
+      list-style-type: none;
+      margin-right: 5px;
+    }
+  }
+
+}
