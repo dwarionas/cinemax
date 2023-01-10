@@ -82,9 +82,15 @@ export const PlayIcon: React.FC = ({}) => {
 export const PlusIcon: React.FC = ({}) => {
     return (
         <button className={'home__main-button'}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>
-                <path fill="#fff" d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"/>
+            <svg width={width} height={height} viewBox="0 0 24 24" >
+                <path
+                    fill="#fff" d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z">
+                </path>
             </svg>
+
+            {/*<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>*/}
+            {/*    <path fill="#fff" d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"/>*/}
+            {/*</svg>*/}
         </button>
     )
 }
