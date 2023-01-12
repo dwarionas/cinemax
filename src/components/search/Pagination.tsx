@@ -5,14 +5,14 @@ import { RootState, useAppDispatch } from "../../redux/store";
 import { setCurrentPage } from "../../redux/slices/searchSlice";
 
 interface IProps {
+    totalPages: number;
     onChangePage: (e: number) => void;
     setLocalPage: React.Dispatch<React.SetStateAction<number>>;
     localPage: number;
 }
 
-const Pagination: React.FC<IProps> = ({ onChangePage, setLocalPage, localPage }) => {
+const Pagination: React.FC<IProps> = ({ onChangePage, setLocalPage, localPage, totalPages }) => {
     const dispatch = useAppDispatch();
-    const { searchTotalPages } = useSelector((state: RootState) => state.search);
 
     return (
         <ReactPaginate
@@ -31,7 +31,7 @@ const Pagination: React.FC<IProps> = ({ onChangePage, setLocalPage, localPage })
                 dispatch(setCurrentPage(e.selected + 1))
             }}
             pageRangeDisplayed={10}
-            pageCount={searchTotalPages > 40 ? 40 : searchTotalPages}
+            pageCount={totalPages > 40 ? 40 : totalPages}
             // forcePage={localPage}
         />
     );

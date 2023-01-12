@@ -5,34 +5,25 @@ import { useNavigate } from "react-router-dom";
 import '../../styles/search.scss';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
-import {
-    searchRequest,
-    searchSliceRequest,
-    recommendationRequest,
-    detailsRequest,
-    setQuery,
-    setCurrentPage
-} from "../../redux/slices/searchSlice";
+import { setQuery, setDetailsParams } from "../../redux/slices/searchSlice";
 
 import Recommendations from "./Recommendations";
 import SearchResults from "./SearchResults";
 import { SearchIcon } from "../AuxiliaryComponents";
 import Pagination from "./Pagination";
 
+import { api } from "../../api/api";
+
 
 const SearchMain: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {
-        searchData,
-        recommendationData,
-        slicedSearchData,
-        query,
-        currentPage,
-        slicedLoading,
-        searchLoading,
-        searchTotalResults
-    } = useSelector((state: RootState) => state.search);
+    const { query, currentPage, searchTotalResults } = useSelector((state: RootState) => state.search);
+
+    const {data: recData, isLoading: isRecLoading, isFetching: isRecFetching, refetch: refetchRec } = api.useGetRecommendationQuery();
+    const [ fetchSearchData, {data: searchData, isLoading: isSearchLoading, isFetching: isSearchFetching} ] = api.useLazyGetSearchDataQuery();
+    const [ fetchSlicedData, {data: slicedData, isLoading: isSlicedLoading, isFetching: isSlicedFetching} ] = api.useLazyGetSlicedSearchDataQuery();
+    const [ fetchDetalizedData ] = api.useLazyGetDetailsQuery();
 
     const [localPage, setLocalPage] = React.useState<number>(1);
     const [localQuery, setLocalQuery] = React.useState<string>('');
@@ -45,16 +36,16 @@ const SearchMain: React.FC = () => {
 
             if (!params.q || !params.p) {
                 setIsSearchSubmitted(false);
-                dispatch(recommendationRequest());
+                refetchRec();
                 navigate('/search');
                 return () => {};
             }
 
             setIsSearchSubmitted(true);
-            dispatch(searchRequest({
+            fetchSearchData({
                 searchQuery: String(params.q),
                 page: Number(params.p),
-            }));
+            });
 
             setLocalPage(Number(params.p));
             setLocalQuery(String(params.q));
@@ -65,7 +56,7 @@ const SearchMain: React.FC = () => {
             setIsSearchSubmitted(false);
             setIsPopupVisible(false);
             setLocalQuery('');
-            dispatch(recommendationRequest());
+            refetchRec();
 
         }
     }, [window.location.search]);
@@ -82,19 +73,19 @@ const SearchMain: React.FC = () => {
     }, [ query, currentPage, isSearchSubmitted ]);
 
     const onChangePage = (number: number) => {
-        dispatch(searchRequest({
+        fetchSearchData({
             searchQuery: query,
             page: number,
-        }));
+        });
     };
 
     const updateSearchValue = React.useCallback(
         debounce((str: string) => {
             if (str.length) {
-                dispatch(searchSliceRequest({
+                fetchSlicedData({
                     searchQuery: str,
                     page: 1,
-                }));
+                })
                 setIsPopupVisible(true);
             } else {
                 setIsPopupVisible(false);
@@ -106,15 +97,16 @@ const SearchMain: React.FC = () => {
     const onSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsPopupVisible(false);
-console.log(isPopupVisible)
+
         if (localQuery) {
             setIsSearchSubmitted(true);
             setLocalPage(1);
             dispatch(setQuery(localQuery));
-            dispatch(searchRequest({
+
+            fetchSearchData({
                 searchQuery: localQuery,
                 page: 1,
-            }));
+            })
         }
     }
 
@@ -124,7 +116,9 @@ console.log(isPopupVisible)
     }
 
     const onSelectItem = (id: number, type: string) => {
-        dispatch(detailsRequest({id, type}))
+        fetchDetalizedData({id, type});
+        dispatch(setDetailsParams({id, type}))
+
     }
 
     return (
@@ -137,13 +131,13 @@ console.log(isPopupVisible)
                         className={'search__form-input'}
                     />
                     <ul className={'search__form-ul'}>
-                        {isPopupVisible && (slicedLoading ? <>Loading...</> : (
-                            slicedSearchData.map((el, i) => (
+                        {isPopupVisible && (isSlicedLoading || isSlicedFetching ? <>Loading...</> : (
+                            slicedData?.results?.slice(0, 4).map((el, i) => (
                                 <li className={'search__form-ul-li'} key={el.id} >{el.title || el.name}</li>
                             ))
                         ))}
 
-                        {isPopupVisible && !slicedLoading ?
+                        {isPopupVisible && (!isSlicedLoading || isSlicedFetching) ?
                             <li className={'search__form-ul-li'}>Load more data... ({searchTotalResults})</li> : null}
                     </ul>
                 </div>
@@ -154,13 +148,13 @@ console.log(isPopupVisible)
             {
                 isSearchSubmitted ?
                     <div className={'search__results'}>
-                        {searchData && searchData.map((item, i) => (
+                        {searchData?.results?.map((item, i) => (
                             <SearchResults key={item.id} item={item} onSelectItem={onSelectItem} />
                         ))}
                     </div>
                 :
                     <div className={'search__recommendations'}>
-                        {recommendationData && recommendationData.map((item, i) => (
+                        {recData?.results?.map((item, i) => (
                             <Recommendations key={item.id} item={item} onSelectItem={onSelectItem} />
                         ))}
                     </div>
@@ -169,6 +163,7 @@ console.log(isPopupVisible)
 
             {isSearchSubmitted &&
                 <Pagination
+                    totalPages={searchData ? searchData.total_pages : 1}
                     onChangePage={onChangePage}
                     setLocalPage={setLocalPage}
                     localPage={localPage} />}

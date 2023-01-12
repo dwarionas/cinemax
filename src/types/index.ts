@@ -1,3 +1,10 @@
+export interface IGlobal {
+    page: number;
+    results: IData[];
+    total_pages: number;
+    total_results: number;
+}
+
 export interface IData {
     adult?: boolean;
     backdrop_path: string | null;
