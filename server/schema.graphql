@@ -1,0 +1,32 @@
+type Global {
+    page: Int
+    total_pages: Int
+    total_results: Int
+    results: [Data]
+}
+
+type Data {
+    adult: Boolean
+    backdrop_path: String
+    genre_ids: [Int]
+    id: Int
+    original_language: String
+    original_name: String
+    original_title: String
+    overview: String
+    popularity: Int
+    poster_path: String
+    release_date: String
+    title: String
+    video: Boolean
+    vote_average: Int
+    vote_count: Int
+    name: String
+    origin_country: [String]
+    media_type: String
+    first_air_date: String
+}
+
+type Query {
+    getRec: [Data]!
+}
