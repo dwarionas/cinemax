@@ -1,0 +1,50 @@
+type Query {
+    getSlider(page: Int!, genre: String!): [Data]!
+    getGenres: [Genre]!
+
+    getRec: [Data]!
+    getSearch(searchQuery: String!, page: Int!): [Data]!
+    getSliced(searchQuery: String!, page: Int!): [Data]!
+    getDetails(type: String!, id: Int!): [Data]!
+}
+
+type Global {
+    page: Int
+    total_pages: Int
+    total_results: Int
+    results: [Data]
+}
+
+type Genre {
+    id: Int
+    name: String
+}
+
+type DetailsData {
+    title: String
+    id: Int
+    poster_path: String
+}
+
+type Data {
+    adult: Boolean
+    backdrop_path: String
+    genre_ids: [Int]
+    id: Int
+    original_language: String
+    original_name: String
+    original_title: String
+    overview: String
+    popularity: Float
+    poster_path: String
+    release_date: String
+    title: String
+    video: Boolean
+    vote_average: Float
+    vote_count: Int
+    name: String
+    origin_country: [String]
+    media_type: String
+    first_air_date: String
+}
+

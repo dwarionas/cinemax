@@ -1,0 +1,8 @@
+query GetSearchData($searchQuery: String!, $page: Int!) {
+    getSearch(searchQuery: $searchQuery, page: $page) {
+        title
+        id
+        poster_path
+        media_type
+    }
+}

@@ -1,0 +1,9 @@
+query GetSlicedData($searchQuery: String!, $page: Int!) {
+    getSliced(searchQuery: $searchQuery, page: $page) {
+        title
+        name
+        id
+        poster_path
+        media_type
+    }
+}

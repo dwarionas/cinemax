@@ -1,0 +1,54 @@
+.search {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 20px;
+    color: #fff;
+
+    &__main {
+        width: 70%;
+        border-right: 0.1px solid gray;
+    }
+
+    &__panel {
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-lorem {
+
+        }
+    }
+
+    &__form {
+        display: flex;
+
+        &-input-wrapper {}
+
+        &-input {}
+
+        &-ul {
+            &-li {
+                list-style-type: none;
+            }
+        }
+
+        &-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+    }
+
+    &__pagination {
+        display: flex;
+        li {
+            list-style-type: none;
+            margin-right: 5px;
+        }
+    }
+
+}

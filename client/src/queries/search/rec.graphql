@@ -1,0 +1,8 @@
+query GetRecData {
+    getRec {
+        title
+        id
+        poster_path
+        media_type
+    }
+}
