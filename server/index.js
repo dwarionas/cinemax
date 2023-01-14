@@ -6,9 +6,7 @@ import { readFileSync } from 'fs';
 import root from "./root.js";
 
 const app = express();
-
 app.use(cors());
-
 app.listen(5000, () => console.log('server started on 5000 port'));
 
 const schemaString = readFileSync('./schema.graphql', { encoding: 'utf8' });
@@ -22,4 +20,3 @@ app.use(
         rootValue: root,
     }),
 );
-
