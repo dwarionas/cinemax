@@ -9,8 +9,6 @@ interface IDetailsProps {
 interface IState {
     query: string;
     currentPage: number;
-    searchTotalPages: number;
-    searchTotalResults: number;
     detailsParams: IDetailsProps;
 }
 
@@ -18,10 +16,6 @@ interface IState {
 const initialState: IState = {
     query: '',
     currentPage: 1,
-
-    searchTotalPages: 0,
-    searchTotalResults: 0,
-
     detailsParams: {
         type: '',
         id: 0

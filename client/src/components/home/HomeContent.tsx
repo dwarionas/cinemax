@@ -4,7 +4,7 @@ import { useAppDispatch, RootState } from "../../redux/store";
 import { setGenresList, setActiveItem } from "../../redux/slices/homeSlice";
 import { preventAnim } from "../Helpers";
 
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import getSlider from '../../queries/home/slider.graphql';
 import getGenres from '../../queries/home/genres.graphql';
 
@@ -21,25 +21,30 @@ const HomeContent: React.FC = () => {
     const dispatch = useAppDispatch();
     const { activeItem, activeCategory } = useSelector((state: RootState) => state.home);
 
-    const slider = useQuery(getSlider);
-    const genres = useQuery(getGenres);
+    const [fetchSlider, slider] = useLazyQuery(getSlider);
+    const [fetchGenres, genres] = useLazyQuery(getGenres);
 
     React.useEffect(() => {
+        fetchGenres();
         dispatch(setGenresList(genres.data?.getGenres));
         preventAnim();
     }, []);
 
     React.useEffect(() => {
         if (activeCategory === 0) {
-            slider.refetch({
-                page: 1,
-                genre: ''
+            fetchSlider({
+                variables: {
+                    page: 1,
+                    genre: ''
+                }
             });
         } else {
             const currentGenre = genresList.filter((el, i) => i === activeCategory - 1).join('');
-            slider.refetch({
-                page: 1,
-                genre: currentGenre
+            fetchSlider({
+                variables: {
+                    page: 1,
+                    genre: currentGenre
+                }
             });
         }
     }, [activeCategory]);

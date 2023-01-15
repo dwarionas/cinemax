@@ -9,7 +9,7 @@ interface IProps {
 const Recommendations: React.FC<IProps> = ({ item, onSelectItem }) => {
     return (
         <div onClick={() => onSelectItem(item.id, item.media_type)}>
-            {item.id}: {item.title}
+            {item.id}: {item.title || item.name}
         </div>
     );
 };

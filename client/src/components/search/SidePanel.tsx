@@ -1,19 +1,20 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import getDetails from '../../queries/search/details.graphql';
 import { IDetalizedData } from '../../types';
 
 const SidePanel: React.FC = () => {
     const { detailsParams } = useSelector((state: RootState) => state.search);
 
-    const details = useQuery(getDetails);
-    // const details = useLazyQuery(getDetails);
+    const [refetch, details] = useLazyQuery(getDetails);
 
-    if (detailsParams.type && detailsParams.id) {
-        details.refetch(detailsParams)
-    }
+    React.useEffect(() => {
+        if (detailsParams.type && detailsParams.id) {
+            refetch({variables: detailsParams});
+        }
+    }, [detailsParams.type, detailsParams.id]);
 
     return (
         <div className={'search__panel'}>

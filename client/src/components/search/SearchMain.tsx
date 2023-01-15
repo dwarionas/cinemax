@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
 import { setQuery, setDetailsParams } from "../../redux/slices/searchSlice";
 
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import getRec from '../../queries/search/rec.graphql';
 import getSearch from '../../queries/search/search.graphql';
 import getSliced from '../../queries/search/sliced.graphql';
@@ -21,11 +21,11 @@ import { IData } from "../../types";
 const SearchMain: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { query, currentPage, searchTotalResults } = useSelector((state: RootState) => state.search);
+    const { query, currentPage } = useSelector((state: RootState) => state.search);
 
-    const rec = useQuery(getRec);
-    const search = useQuery(getSearch);
-    const sliced = useQuery(getSliced);
+    const [refetchRec, rec] = useLazyQuery(getRec);
+    const [refetchSearch, search] = useLazyQuery(getSearch);
+    const [refetchSliced, sliced] = useLazyQuery(getSliced);
 
     const [localPage, setLocalPage] = React.useState<number>(1);
     const [localQuery, setLocalQuery] = React.useState<string>('');
@@ -38,15 +38,17 @@ const SearchMain: React.FC = () => {
 
             if (!params.q || !params.p) {
                 setIsSearchSubmitted(false);
-                rec.refetch();
+                refetchRec();
                 navigate('/search');
                 return () => {};
             }
 
             setIsSearchSubmitted(true);
-            search.refetch({
-                searchQuery: String(params.q),
-                page: Number(params.p),
+            refetchSearch({
+                variables: {
+                    searchQuery: String(params.q),
+                    page: Number(params.p),
+                }
             });
 
             setLocalPage(Number(params.p));
@@ -58,7 +60,7 @@ const SearchMain: React.FC = () => {
             setIsSearchSubmitted(false);
             setIsPopupVisible(false);
             setLocalQuery('');
-            rec.refetch();
+            refetchRec();
 
         }
     }, [window.location.search]);
@@ -75,19 +77,21 @@ const SearchMain: React.FC = () => {
     }, [ query, currentPage, isSearchSubmitted ]);
 
     const onChangePage = (number: number) => {
-        search.refetch({
-            searchQuery: query,
-            page: number,
+        refetchSearch({
+            variables: {
+                searchQuery: query,
+                page: number,
+            }
         });
     };
 
     const updateSearchValue = React.useCallback(
         debounce((str: string) => {
             if (str.length) {
-                sliced.refetch({
-                    searchQuery: str,
-                    page: 1,
-                })
+                refetchSliced({variables: {
+                        searchQuery: str,
+                        page: 1,
+                    }})
                 setIsPopupVisible(true);
             } else {
                 setIsPopupVisible(false);
@@ -105,9 +109,11 @@ const SearchMain: React.FC = () => {
             setLocalPage(1);
             dispatch(setQuery(localQuery));
 
-            search.refetch({
-                searchQuery: localQuery,
-                page: 1,
+            refetchSearch({
+                variables: {
+                    searchQuery: localQuery,
+                    page: 1,
+                }
             })
         }
     }
@@ -138,7 +144,7 @@ const SearchMain: React.FC = () => {
                         ))}
 
                         {isPopupVisible && !sliced.loading ?
-                            <li className={'search__form-ul-li'}>Load more data... ({searchTotalResults})</li> : null}
+                            <li className={'search__form-ul-li'}>Load more data... (414)</li> : null}
                     </ul>
                 </div>
 
@@ -148,7 +154,7 @@ const SearchMain: React.FC = () => {
             {
                 isSearchSubmitted ?
                     <div className={'search__results'}>
-                        {search.data?.getSearch.map((item: IData) => (
+                        {search.data?.getSearch.results.map((item: IData) => (
                             <SearchResults key={item.id} item={item} onSelectItem={onSelectItem} />
                         ))}
                     </div>
@@ -163,7 +169,7 @@ const SearchMain: React.FC = () => {
 
             {isSearchSubmitted &&
                 <Pagination
-                    totalPages={search.data ? search.data.total_pages : 1}
+                    totalPages={search.data ? search.data.getSearch.total_pages : 1}
                     onChangePage={onChangePage}
                     setLocalPage={setLocalPage}
                     localPage={localPage} />}

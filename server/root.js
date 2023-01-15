@@ -26,7 +26,7 @@ const root = {
     getSearch: async (props) => {
         const { searchQuery, page } = props;
         const searchResponse = await axios.get(`${BASE}/search/multi?api_key=${API_KEY}&query=${searchQuery}&page=${page}&language=en-US`);
-        return searchResponse.data.results;
+        return searchResponse.data;
     },
     getSliced: async (props) => {
         const { searchQuery, page } = props;
