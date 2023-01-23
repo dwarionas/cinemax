@@ -16,12 +16,13 @@ const Pagination: React.FC<IProps> = ({ onChangePage, setLocalPage, localPage, t
 
     return (
         <ReactPaginate
-            className={'search__pagination'}
-            pageClassName={'search__pagination-page'}
-            activeClassName={'search__pagination-page-active'}
-            containerClassName={'search__pagination-container'}
-            breakClassName={'search__pagination-break'}
-            disabledClassName={'search__pagination-disabled'}
+            className={'search__main-pagination'}
+            pageClassName={'search__main-pagination-page'}
+            activeClassName={'search__main-pagination-page-active'}
+            breakClassName={'search__main-pagination-page-break'}
+            disabledClassName={'search__main-pagination-page-disabled'}
+            previousClassName={'search__main-pagination-page-prev'}
+            nextClassName={'search__main-pagination-page-next'}
             breakLabel="..."
             nextLabel=">"
             previousLabel="<"

@@ -12,11 +12,12 @@ import getRec from '../../queries/search/rec.graphql';
 import getSearch from '../../queries/search/search.graphql';
 import getSliced from '../../queries/search/sliced.graphql';
 
-import Recommendations from "./Recommendations";
-import SearchResults from "./SearchResults";
-import { SearchIcon } from "../Helpers";
+import SearchItem from "./SearchItem";
+import Form from './Form';
 import Pagination from "./Pagination";
+import ItemSkeleton from './ItemSkeleton';
 import { IData } from "../../types";
+
 
 const SearchMain: React.FC = () => {
     const navigate = useNavigate();
@@ -54,14 +55,11 @@ const SearchMain: React.FC = () => {
             setLocalPage(Number(params.p));
             setLocalQuery(String(params.q));
             dispatch(setQuery(String(params.q)));
-
         } else {
-
             setIsSearchSubmitted(false);
             setIsPopupVisible(false);
             setLocalQuery('');
             refetchRec();
-
         }
     }, [window.location.search]);
 
@@ -129,42 +127,49 @@ const SearchMain: React.FC = () => {
 
     return (
         <div className={'search__main'}>
-            <form onSubmit={onSubmitForm} className={'search__form'}>
-                <div className={'search__form-input-wrapper'}>
-                    <input
-                        value={localQuery}
-                        onChange={(event) => onChangeInput(event)}
-                        className={'search__form-input'}
-                    />
-                    <ul className={'search__form-ul'}>
-                        {isPopupVisible && (sliced.loading ? <>Loading...</> : (
-                            sliced.data?.getSliced.map((el: IData) => (
-                                <li className={'search__form-ul-li'} key={el.id} >{el.title || el.name}</li>
-                            ))
-                        ))}
-
-                        {isPopupVisible && !sliced.loading ?
-                            <li className={'search__form-ul-li'}>Load more data... (414)</li> : null}
-                    </ul>
-                </div>
-
-                <button type="submit" className={'search__form-btn'}><SearchIcon color={'#fff'}/></button>
-            </form>
+            <Form 
+                onSubmitForm={onSubmitForm}
+                localQuery={localQuery}
+                onChangeInput={onChangeInput}
+                isPopupVisible={isPopupVisible}
+                sliced={sliced}
+                setLocalQuery={setLocalQuery}
+                setIsPopupVisible={setIsPopupVisible}
+            />
 
             {
                 isSearchSubmitted ?
-                    <div className={'search__results'}>
-                        {search.data?.getSearch.results.map((item: IData) => (
-                            <SearchResults key={item.id} item={item} onSelectItem={onSelectItem} />
-                        ))}
+                    <div className={'search__main-content'}>
+                        <span className={'search__main-content-title'}>Search results:</span>
+                        <div className={'search__main-content-wrapper'}>
+                            {
+                                search.loading && !search.data ? 
+                                    [...Array(20)].map((_, i) => (
+                                        <ItemSkeleton key={i}/>
+                                    ))
+                                : 
+                                    search.data?.getSearch.results.map((item: IData) => (
+                                        <SearchItem key={item.id} item={item} onSelectItem={onSelectItem} />
+                                    ))
+                            }
+                        </div>
                     </div>
                 :
-                    <div className={'search__recommendations'}>
-                        {rec.data?.getRec.map((item: IData) => (
-                            <Recommendations key={item.id} item={item} onSelectItem={onSelectItem} />
-                        ))}
+                    <div className={'search__main-content'}>
+                        <span className={'search__main-content-title'}>Recommendations:</span>
+                        <div className={'search__main-content-wrapper'}>
+                            {
+                                rec.loading && !rec.data ? 
+                                    [...Array(20)].map((_, i) => (
+                                        <ItemSkeleton key={i}/>
+                                    ))
+                                : 
+                                    rec.data?.getRec.map((item: IData) => (
+                                        <SearchItem key={item.id} item={item} onSelectItem={onSelectItem} />
+                                    ))
+                            }
+                        </div>
                     </div>
-
             }
 
             {isSearchSubmitted &&

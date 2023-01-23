@@ -18,7 +18,7 @@ const SidePanel: React.FC = () => {
 
     return (
         <div className={'search__panel'}>
-            {!details.data && !details.loading && <span className={'search__panel-message'}>Please, select item</span>}
+            {(!details.data && !details.loading) && <span className={'search__panel-message'}>Please, select item</span>}
 
             {details.loading ?
                 <span className={'search__panel-lorem'}>Loading...</span>

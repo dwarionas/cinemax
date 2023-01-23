@@ -9,6 +9,8 @@ query GetSearchData($searchQuery: String!, $page: Int!) {
             id
             poster_path
             media_type
+            release_date
+            first_air_date
         }
     }
 }

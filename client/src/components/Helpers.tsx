@@ -53,6 +53,22 @@ export const SearchIcon: React.FC<ISVGProps> = ({color}) => {
     )
 }
 
+export const SearchPageIcon: React.FC<ISVGProps> = ({color}) => {
+    return (
+        <svg  viewBox="0 0 24 24" width={width} height={height}>
+            <path className='icon' fill={'#56585C'}
+                  d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/></svg>
+    )
+}
+
+export const CrossIcon: React.FC<ISVGProps> = ({color}) => {
+    return (
+        <svg viewBox="0 0 24 24"  width={width} height={height}>
+            <path className='icon' fill={'#56585C'} d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"/>
+        </svg>
+    )
+}
+
 export const SettingsIcon: React.FC<ISVGProps> = ({color}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" width={width} height={height}>
@@ -118,6 +134,14 @@ export const StarIcon: React.FC<IStarProps> = ({rate}) => {
         </div>
     )
 }
+
+// export const ArrowLeft = () => {
+//     return (
+//         <svg enable-background="new 0 0 24 24" viewBox="0 0 24 24" width={'40px'} height={'40px'}>
+//             <path fill="#0092E4" d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"/>
+//         </svg>
+//     )
+// }
 
 export const DetectGenres: React.FC<IDetectGenresProps> = ({genresArray}) => {
     const { genresList } = useSelector((state: RootState) => state.home);
