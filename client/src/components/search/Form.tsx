@@ -66,7 +66,10 @@ const Form: React.FC<IProps> = ({ onSubmitForm, localQuery, setLocalQuery, onCha
                     {isPopupVisible && (sliced.loading ? <>Loading...</> : (
                         sliced.data?.getSliced.map((el: IData) => (
                             <li className={'search__main-form-ul-li'} key={el.id} >
-                                {el.title || el.name} {el.first_air_date?.slice(0, 4) || el.release_date?.slice(0, 4)}
+                                <div>
+                                    <span>{el.title || el.name}</span>
+                                    <span>{el.first_air_date?.slice(0, 4) || el.release_date?.slice(0, 4)}</span>
+                                </div>
                             </li>
                         ))
                     ))}

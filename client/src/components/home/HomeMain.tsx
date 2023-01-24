@@ -13,8 +13,8 @@ const HomeMain: React.FC<IProps> = ({ item }) => {
             <StarIcon rate={item.vote_average} />
             <DetectGenres genresArray={item.genre_ids}/>
             <div className={'home__main-buttons'}>
-                <PlayIcon/>
-                <PlusIcon/>
+                <PlayIcon classText={'home__main-button'}/>
+                <PlusIcon classText={'home__main-button'}/>
             </div>
             <span className={'home__main-description'}>{item.overview}</span>
         </div>

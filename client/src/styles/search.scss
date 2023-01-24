@@ -109,8 +109,20 @@
                     border-radius: 5px;
         
                     &-image {
-                        // border: 1px solid rgba(249, 249, 249, 0.1);
+                        border: 1px solid rgba(249, 249, 249, 0.1);
                         height: 300px;
+                    }
+
+                    &-btns {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 50px;
+                    }
+
+                    &-btn {
+                        width: 50%;
+                        background-color: transparent;
+                        border: 0.1px solid gray;
                     }
                 }
             }
