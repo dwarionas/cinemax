@@ -38,7 +38,7 @@ const NavAside: React.FC = () => {
             </div>
             <div className={'app__nav__logout'}>
                 <NavLink
-                    to={'/logout'}
+                    to={'/auth'}
                     className={'app__nav__wrapper__item'}
                     children={({isActive}) => <LogoutIcon color={isActive ? '#fff' : '#56585C'} />}
                 />

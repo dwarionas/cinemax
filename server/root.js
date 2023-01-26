@@ -3,7 +3,27 @@ import axios from "axios";
 const BASE = 'https://api.themoviedb.org/3'
 const API_KEY = '3e9b52dbfb07553d4df2f99c97de61e7';
 
+const users = [];
+
+const createUser = (input) => {
+    const id = Date.now();
+    const role = 'user';
+    return {id, role, ...input};
+}
+
 const root = {
+    getAllUsers: () => {
+        return users;
+    },
+    getUser: ({id}) => {
+        return users.find(user => user.id == id)
+    },
+    createUser: ({input}) => {
+        const user = createUser(input);
+        users.push(user);
+        return user;
+    },
+
     getSlider: async (props) => {
         const { page, genre } = props;
         const popularMovies =

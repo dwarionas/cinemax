@@ -6,7 +6,34 @@ type Query {
     getSearch(searchQuery: String!, page: Int!): Global!
     getSliced(searchQuery: String!, page: Int!): [Data]!
     getDetails(type: String!, id: Int!): [Data]!
+
+    getAllUsers: [User]!
+    getUser(id: ID): User!
 }
+
+type Mutation {
+    createUser(input: registration): User
+}
+
+input registration {
+    email: String!
+    password: String!
+}
+
+type User {
+    email: String!
+    password: String!
+    id: ID!
+    role: String!
+}
+
+
+
+
+
+
+
+
 
 type Global {
     page: Int
