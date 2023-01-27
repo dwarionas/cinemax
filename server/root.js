@@ -1,27 +1,68 @@
 import axios from "axios";
+import { MongoClient } from 'mongodb';
+import bcrypt from "bcrypt";
 
-const BASE = 'https://api.themoviedb.org/3'
-const API_KEY = '3e9b52dbfb07553d4df2f99c97de61e7';
+const client = new MongoClient(process.env.MONGO_CONNECTION);
 
-const users = [];
+const BASE = process.env.BASE;
+const API_KEY = process.env.API_KEY;
+
+const start = async () => {
+    try {
+        await client.connect();
+        console.log('db connected');
+    } catch (error) {
+        console.log('error ', error);
+    }
+}
+start();
 
 const createUser = (input) => {
-    const id = Date.now();
+    const id = String(Date.now());
     const role = 'user';
     return {id, role, ...input};
 }
 
 const root = {
-    getAllUsers: () => {
-        return users;
+    getAllUsers: async () => {
+        const users = client.db().collection('users');
+        const allUsers = await users.find().toArray()
+        return allUsers;
     },
-    getUser: ({id}) => {
-        return users.find(user => user.id == id)
-    },
-    createUser: ({input}) => {
+    createUser: async ({input}) => {
         const user = createUser(input);
-        users.push(user);
-        return user;
+        const users = client.db().collection('users');
+        const candidate = await users.findOne({email: user.email});
+        if (candidate) {
+            return {emailError: true}
+        }
+
+        const hashedPassword = bcrypt.hashSync(user.password, 7);
+        await users.insertOne({...user, password: hashedPassword});
+        return {emailError: false, ...user, password: hashedPassword}
+    },
+    login: async ({email, password}) => {
+        const users = client.db().collection('users');
+        const user = await users.findOne({email});
+        if (!user) {
+            return {emailError: true}
+        }
+
+        const isPasswordValid = bcrypt.compareSync(password, user.password)
+        if (!isPasswordValid) {
+            return {emailError: false, passwordError: true}
+        }
+
+        return {emailError: false, passwordError: false, ...user};
+    },
+    checkUser: async ({id}) => {
+        const users = client.db().collection('users');
+        const user = await users.findOne({id})
+        if (!user) {
+            return {idError: true}
+        }
+
+        return {idError: false, ...user};
     },
 
     getSlider: async (props) => {

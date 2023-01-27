@@ -1,5 +1,6 @@
-query GetUser($id: String!) {
-    getUser(id: $id) {
+query CheckUser($id: String!) {
+    checkUser(id: $id) {
+        idError
         email
         password
         id

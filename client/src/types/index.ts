@@ -110,3 +110,10 @@ export interface IGenre {
     id: number;
     name: string;
 }
+
+export interface IUser {
+    email: string;
+    password: string;
+    id: string;
+    role: string;
+}

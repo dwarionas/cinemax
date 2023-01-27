@@ -8,14 +8,32 @@ type Query {
     getDetails(type: String!, id: Int!): [Data]!
 
     getAllUsers: [User]!
-    getUser(id: ID): User!
+    checkUser(id: String!): userReturn
+    login(email: String!, password: String!): authReturn
 }
 
 type Mutation {
-    createUser(input: registration): User
+    createUser(input: auth): authReturn
 }
 
-input registration {
+type userReturn {
+    idError: Boolean!
+    email: String
+    password: String
+    id: ID
+    role: String
+}
+
+type authReturn {
+    emailError: Boolean
+    passwordError: Boolean
+    email: String
+    password: String
+    id: ID
+    role: String
+}
+
+input auth {
     email: String!
     password: String!
 }
