@@ -7,7 +7,6 @@ import Profile from "../components/Profile";
 import Settings from "../components/Settings";
 import Recent from "../components/Recent";
 import Search from "../components/search/Search";
-import Auth from '../components/Auth';
 
 const router = createBrowserRouter([
     {
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
                 path: 'search',
                 element: <Search/>
             },
-            {
-                path: 'auth',
-                element: <Auth />
-            }
         ],
     },
 ]);

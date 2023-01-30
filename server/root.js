@@ -7,7 +7,7 @@ const client = new MongoClient(process.env.MONGO_CONNECTION);
 const BASE = process.env.BASE;
 const API_KEY = process.env.API_KEY;
 
-const start = async () => {
+const startDB = async () => {
     try {
         await client.connect();
         console.log('db connected');
@@ -15,7 +15,7 @@ const start = async () => {
         console.log('error ', error);
     }
 }
-start();
+startDB();
 
 const createUser = (input) => {
     const id = String(Date.now());

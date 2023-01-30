@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 
 import home from "./slices/homeSlice";
 import search from "./slices/searchSlice";
+import auth from "./slices/authSlice";
 
 const store = configureStore({
     reducer: {
         home,
         search,
+        auth
     },
     devTools: process.env.NODE_ENV !== 'production'
 })

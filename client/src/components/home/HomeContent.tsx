@@ -5,8 +5,8 @@ import { setGenresList, setActiveItem } from "../../redux/slices/homeSlice";
 import { preventAnim } from "../Helpers";
 
 import { useLazyQuery } from "@apollo/client";
-import getSlider from '../../queries/home/slider.graphql';
-import getGenres from '../../queries/home/genres.graphql';
+import getSlider from '../../graphql/queries/home/slider.graphql';
+import getGenres from '../../graphql/queries/home/genres.graphql';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
@@ -20,6 +20,7 @@ const HomeContent: React.FC = () => {
 
     const dispatch = useAppDispatch();
     const { activeItem, activeCategory } = useSelector((state: RootState) => state.home);
+    const { isAuthModalActive } = useSelector((state: RootState) => state.auth);
 
     const [fetchSlider, slider] = useLazyQuery(getSlider);
     const [fetchGenres, genres] = useLazyQuery(getGenres);
@@ -57,7 +58,7 @@ const HomeContent: React.FC = () => {
 
             <div className={'home__slider'}>
                 <Swiper slidesPerView={8} className={'home__swiper'} >
-                    {slider.data?.getSlider.map((item: IData, i: number) => (
+                    {!isAuthModalActive && slider.data?.getSlider.map((item: IData, i: number) => (
                         <SwiperSlide
                             key={item.id}
                             onClick={() => dispatch(setActiveItem(i))}

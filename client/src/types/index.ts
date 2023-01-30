@@ -113,7 +113,6 @@ export interface IGenre {
 
 export interface IUser {
     email: string;
-    password: string;
     id: string;
     role: string;
 }

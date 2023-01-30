@@ -8,9 +8,9 @@ import { useAppDispatch, RootState } from "../../redux/store";
 import { setQuery, setDetailsParams } from "../../redux/slices/searchSlice";
 
 import { useLazyQuery } from '@apollo/client';
-import getRec from '../../queries/search/rec.graphql';
-import getSearch from '../../queries/search/search.graphql';
-import getSliced from '../../queries/search/sliced.graphql';
+import getRec from '../../graphql/queries/search/rec.graphql';
+import getSearch from '../../graphql/queries/search/search.graphql';
+import getSliced from '../../graphql/queries/search/sliced.graphql';
 
 import SearchItem from "./SearchItem";
 import Form from './Form';

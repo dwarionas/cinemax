@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useLazyQuery } from '@apollo/client';
-import getDetails from '../../queries/search/details.graphql';
+import getDetails from '../../graphql/queries/search/details.graphql';
 import { IDetalizedData } from '../../types';
 
 const SidePanel: React.FC = () => {

@@ -1,8 +1,12 @@
 import React from 'react';
+import { useAppDispatch } from "../redux/store";
 import { NavLink } from "react-router-dom";
 import { HomeIcon, ProfileIcon, RecentIcon, SearchIcon, SettingsIcon, LogoutIcon } from "./Helpers";
+import { setAuthModalActive } from "../redux/slices/authSlice";
 
 const NavAside: React.FC = () => {
+    const dispatch = useAppDispatch();
+
     return (
         <nav className={'app__nav'}>
             <div className={'app__nav__wrapper'}>
@@ -37,11 +41,12 @@ const NavAside: React.FC = () => {
                 />
             </div>
             <div className={'app__nav__logout'}>
-                <NavLink
-                    to={'/auth'}
+                <div
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <LogoutIcon color={isActive ? '#fff' : '#56585C'} />}
-                />
+                    onClick={() => dispatch(setAuthModalActive(true))}
+                >
+                    <LogoutIcon color={'#56585C'} />
+                </div>
             </div>
         </nav>
     );
