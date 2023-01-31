@@ -1,11 +1,14 @@
+@import './index.scss';
+
 .auth {
-    background: rgba(30, 29, 31, 1);
-    background: -moz-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
-    background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(30, 29, 31, 1)), color-stop(100%, rgba(223, 64, 90, 1)));
-    background: -webkit-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
-    background: -o-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
-    background: -ms-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
+    // background: rgba(30, 29, 31, 1);
+    // background: -moz-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
+    // background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(30, 29, 31, 1)), color-stop(100%, rgba(223, 64, 90, 1)));
+    // background: -webkit-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
+    // background: -o-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
+    // background: -ms-linear-gradient(-45deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
     background: linear-gradient(135deg, rgba(30, 29, 31, 1) 0%, rgba(223, 64, 90, 1) 100%);
+    // background: linear-gradient(#141e30, #243b55);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e1d1f', endColorstr='#df405a', GradientType=1);
 
 
@@ -19,16 +22,12 @@
     align-items: center;
 }
 
-h1 {
+.auth__label {
     font-weight: bold;
-    margin: 0;
+    margin-bottom: 20px;
 }
 
-h2 {
-    text-align: center;
-}
-
-p {
+.p {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -36,44 +35,7 @@ p {
     margin: 20px 0 30px;
 }
 
-span {
-    font-size: 12px;
-}
-
-a {
-    color: #333;
-    font-size: 14px;
-    text-decoration: none;
-    margin: 15px 0;
-}
-
-button {
-    border-radius: 20px;
-    border: 1px solid #FF4B2B;
-    background-color: #FF4B2B;
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 12px 45px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: transform 30ms ease-in;
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-button:focus {
-    outline: none;
-}
-
-button.ghost {
-    background-color: transparent;
-    border-color: #FFFFFF;
-}
-
-form {
+.auth__form {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
@@ -84,19 +46,68 @@ form {
     text-align: center;
 }
 
-input {
+.auth__form button {
+    border-radius: 20px;
+    border: 1px solid #87314e;
+    background-color: #87314e;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    margin-top: 20px;
+}
+
+.auth__form button:active {
+    transform: scale(0.95);
+}
+
+.auth__form button:focus {
+    outline: none;
+}
+
+.ghost {
+    background-color: transparent;
+
+    border-radius: 20px;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    margin-top: 20px;
+}
+
+.ghost:active {
+    transform: scale(0.95);
+}
+
+.auth__form input {
     background-color: #eee;
-    border: none;
+    border-color: transparent;
     padding: 12px 15px;
     margin: 8px 0;
     width: 100%;
+    outline: none;
 }
+
+.input__error {
+    overflow: hidden;
+    border: .15em solid #bb394f !important;
+    white-space: nowrap;
+    letter-spacing: .15em;
+}
+
 
 .container {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-        0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
     position: relative;
     overflow: hidden;
     width: 768px;
@@ -166,9 +177,9 @@ input {
 }
 
 .overlay {
-    background: #FF416C;
-    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-    background: linear-gradient(to right, #FF4B2B, #FF416C);
+    background: #87314e;
+    background: -webkit-linear-gradient(to right, #87314e, #87314e);
+    background: linear-gradient(to right, #87314e, #87314e);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;

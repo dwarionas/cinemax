@@ -1,11 +1,23 @@
 import React from 'react';
-import { useAppDispatch } from "../redux/store";
+import { useSelector } from "react-redux";
+import { useAppDispatch, RootState } from "../redux/store";
 import { NavLink } from "react-router-dom";
-import { HomeIcon, ProfileIcon, RecentIcon, SearchIcon, SettingsIcon, LogoutIcon } from "./Helpers";
-import { setAuthModalActive } from "../redux/slices/authSlice";
+import { HomeIcon, ProfileIcon, RecentIcon, SearchIcon, SettingsIcon, LoginIcon, LogoutIcon } from "./Helpers";
+import { setAuthModalActive, setIsLogged } from "../redux/slices/authSlice";
 
 const NavAside: React.FC = () => {
     const dispatch = useAppDispatch();
+    const { isLogged } = useSelector((state: RootState) => state.auth)
+
+    const logout = () => {
+        if (window.localStorage.getItem('isLogged') && window.localStorage.getItem('token')) {
+            window.localStorage.removeItem('isLogged');
+            window.localStorage.removeItem('token');
+            dispatch(setIsLogged(false));
+        } else {
+            console.log('not auth')
+        }
+    }
 
     return (
         <nav className={'app__nav'}>
@@ -13,40 +25,48 @@ const NavAside: React.FC = () => {
                 <NavLink
                     to={'/'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <HomeIcon color={isActive ? '#fff' : '#56585C'} />}
+                    children={({ isActive }) => <HomeIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
                 <NavLink
                     to={'/search'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <SearchIcon color={isActive ? '#fff' : '#56585C'} />}
+                    children={({ isActive }) => <SearchIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
                 <NavLink
                     to={'/recent'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <RecentIcon color={isActive ? '#fff' : '#56585C'} />}
+                    children={({ isActive }) => <RecentIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
                 <NavLink
                     to={'/profile'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <ProfileIcon color={isActive ? '#fff' : '#56585C'} />}
+                    children={({ isActive }) => <ProfileIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
                 <NavLink
                     to={'/settings'}
                     className={'app__nav__wrapper__item'}
-                    children={({isActive}) => <SettingsIcon color={isActive ? '#fff' : '#56585C'} />}
+                    children={({ isActive }) => <SettingsIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
             </div>
             <div className={'app__nav__logout'}>
-                <div
-                    className={'app__nav__wrapper__item'}
-                    onClick={() => dispatch(setAuthModalActive(true))}
-                >
-                    <LogoutIcon color={'#56585C'} />
-                </div>
+                {!isLogged ?
+                    <div
+                        className={'app__nav__wrapper__item'}
+                        onClick={() => dispatch(setAuthModalActive(true))}
+                    >
+                        <LoginIcon color={'#56585C'} />
+                    </div> :
+                    <div
+                        className={'app__nav__wrapper__item'}
+                        onClick={() => logout()}
+                    >
+                        <LogoutIcon color={'#56585C'} />
+                    </div>}
+
             </div>
         </nav>
     );

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { setUser, setIsLogged } from "../../redux/slices/authSlice";
 import { useMutation } from '@apollo/client';
+import { setAuthModalActive } from '../../redux/slices/authSlice';
 import createUser from '../../graphql/mutations/auth/Registration.graphql';
 
 const Registration: React.FC = ({ }) => {
@@ -11,6 +12,10 @@ const Registration: React.FC = ({ }) => {
 
     const [email, setEmail] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
+
+    const [emailError, setEmailError] = React.useState<boolean>(false);
+    const [passwordError, setPasswordError] = React.useState<boolean>(false);
+    const [message, setMessage] = React.useState<string>('');
 
     const [register] = useMutation(createUser);
 
@@ -25,13 +30,16 @@ const Registration: React.FC = ({ }) => {
             }
         }).then(({ data }) => {
             if (data.createUser.emailError) {
-                console.log('User already exist, choose other email')
+                setEmailError(true)
+                setMessage('User already exist, choose other email')
+                setTimeout(() => setEmailError(false), 1_000)
             } else {
                 console.log('Success')
                 dispatch(setIsLogged(true));
                 window.localStorage.setItem('isLogged', 'true')
                 window.localStorage.setItem('token', data.createUser.id)
                 dispatch(setUser(data.createUser))
+                dispatch(setAuthModalActive(false))
             }
 
 
@@ -42,11 +50,12 @@ const Registration: React.FC = ({ }) => {
 
     return (
         <div className="form-container sign-up-container">
-            <form action="#">
-                <h1>Create Account</h1>
+            <form className='auth__form'>
+                <h1 className={'auth__label'}>Create Account</h1>
                 <input
+                    className={emailError ? "input__error" : undefined}
                     onChange={e => setEmail(e.target.value)}
-                    value={email}
+                    value={emailError ? message : email}
                     type="text"
                     placeholder='email'
                 />

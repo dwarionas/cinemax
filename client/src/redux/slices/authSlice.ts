@@ -15,7 +15,7 @@ const initialState: IState = {
         role: '',
     },
     isLogged: false,
-    isAuthModalActive: true
+    isAuthModalActive: false
 }
 
 const authSlice = createSlice({
