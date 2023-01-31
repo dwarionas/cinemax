@@ -12,8 +12,10 @@ import { setAuthModalActive, setIsLogged } from "../../redux/slices/authSlice";
 import Login from './Login';
 import Registration from './Registration';
 
-const AuthModal: React.FC = ({}) => {
+const AuthModal: React.FC = ({ }) => {
     const dispatch = useAppDispatch();
+
+    const [isRightPanelActive, setIsRightPanelActive] = React.useState(false);
 
     const [fetchAllUsers, allUsersData] = useLazyQuery(getAllUsers);
 
@@ -30,33 +32,25 @@ const AuthModal: React.FC = ({}) => {
     return (
         <div className={'auth'} onClick={() => dispatch(setAuthModalActive(false))}>
             <div className={'auth__content'} onClick={e => e.stopPropagation()}>
-                <Tabs>
-                    <TabList className={'auth__content-tablist'}>
-                        <Tab 
-                            className={'auth__content-tablist-tab'} 
-                            disabledClassName={'auth__content-tablist-tab-disabled'} 
-                            selectedClassName={'auth__content-tablist-tab-selected'}>
-                            <span>Login</span>
-                        </Tab>
-                        <Tab 
-                            className={'auth__content-tablist-tab'} 
-                            disabledClassName={'auth__content-tablist-tab-disabled'} 
-                            selectedClassName={'auth__content-tablist-tab-selected'}>
-                            <span>Registration</span>
-                        </Tab>
-                    </TabList>
+                <div className={`container ${isRightPanelActive ? 'right-panel-active' : ''}`} id="container">
+                    <Login />
+                    <Registration />
 
-                    <TabPanel 
-                        className={'auth__content-tabpanel'} 
-                        selectedClassName={'auth__content-tabpanel-selected'}>
-                        <Login/>
-                    </TabPanel>
-                    <TabPanel 
-                        className={'auth__content-tabpanel'} 
-                        selectedClassName={'auth__content-tabpanel-selected'}>
-                        <Registration/>
-                    </TabPanel>
-                </Tabs>
+                    <div className="overlay-container">
+                        <div className="overlay">
+                            <div className="overlay-panel overlay-left">
+                                <h1>Welcome Back!</h1>
+                                <p>To keep connected with us please login with your personal info</p>
+                                <button className="ghost" id="signIn" onClick={() => setIsRightPanelActive(false)}>Sign In</button>
+                            </div>
+                            <div className="overlay-panel overlay-right">
+                                <h1>Hello, Friend!</h1>
+                                <p>Enter your personal details and start journey with us</p>
+                                <button className="ghost" id="signUp" onClick={() => setIsRightPanelActive(true)}>Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -6,7 +6,7 @@ import { useLazyQuery } from '@apollo/client';
 import checkUser from '../../graphql/queries/auth/CheckUser.graphql';
 import login from '../../graphql/queries/auth/Login.graphql';
 
-const Login: React.FC = ({}) => {
+const Login: React.FC = ({ }) => {
     const dispatch = useAppDispatch();
     const { isLogged, user } = useSelector((state: RootState) => state.auth);
 
@@ -20,8 +20,8 @@ const Login: React.FC = ({}) => {
         if (window.localStorage.getItem('isLogged') && window.localStorage.getItem('token')) {
             dispatch(setIsLogged(true));
             fetchUser({
-                variables: {id: window.localStorage.getItem('token')}
-            }).then(({data}) => {
+                variables: { id: window.localStorage.getItem('token') }
+            }).then(({ data }) => {
                 if (data.checkUser.idError) {
                     console.log('auth error')
                 } else {
@@ -38,7 +38,7 @@ const Login: React.FC = ({}) => {
                 email,
                 password
             }
-        }).then(({data}) =>{
+        }).then(({ data }) => {
             if (data.login.emailError) {
                 console.log('User doesn`t exist')
             } else if (data.login.passwordError) {
@@ -50,30 +50,30 @@ const Login: React.FC = ({}) => {
                 window.localStorage.setItem('token', data.login.id)
                 dispatch(setUser(data.login))
             }
-            
+
             setPassword('');
             setEmail('');
         })
     }
 
     return (
-        <div className="auth__content-item">
-            <input
-                className={'auth__content-item-input'}
-                onChange={e => setEmail(e.target.value)}
-                value={email}
-                type="text"
-                placeholder='email'
-            />
-            <input
-                className={'auth__content-item-input'}
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-                type="password"
-                placeholder='password'
-            />
-
-            <button className={'auth__content-item-btn'} onClick={(e) => loginUser(e)}>Login</button>
+        <div className="form-container sign-in-container">
+            <form action="#">
+                <h1>Sign in</h1>
+                <input
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    type="text"
+                    placeholder='email'
+                />
+                <input
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    type="password"
+                    placeholder='password'
+                />
+                <button onClick={(e) => loginUser(e)}>Sign In</button>
+            </form>
         </div>
     )
 }

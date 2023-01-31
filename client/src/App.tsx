@@ -12,11 +12,11 @@ const App: React.FC = () => {
 
     return (
         <div className={'app'} >
-            <NavAside/>
+            <NavAside />
 
             <main className={'app__content'}>
-                <Outlet/>
-                {isAuthModalActive ? <AuthModal/> : null}
+                <Outlet />
+                {isAuthModalActive ? <AuthModal /> : null}
             </main>
         </div>
     );

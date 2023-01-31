@@ -5,7 +5,7 @@ import { setUser, setIsLogged } from "../../redux/slices/authSlice";
 import { useMutation } from '@apollo/client';
 import createUser from '../../graphql/mutations/auth/Registration.graphql';
 
-const Registration: React.FC = ({}) => {
+const Registration: React.FC = ({ }) => {
     const dispatch = useAppDispatch();
     const { isLogged, user } = useSelector((state: RootState) => state.auth);
 
@@ -23,7 +23,7 @@ const Registration: React.FC = ({}) => {
                     password
                 }
             }
-        }).then(({data}) => {
+        }).then(({ data }) => {
             if (data.createUser.emailError) {
                 console.log('User already exist, choose other email')
             } else {
@@ -41,30 +41,30 @@ const Registration: React.FC = ({}) => {
     }
 
     return (
-        <div className="auth__content-item">
-            <input
-                className={'auth__content-item-input'}
-                onChange={e => setEmail(e.target.value)}
-                value={email}
-                type="text"
-                placeholder='email'
-            />
-            <input
-                className={'auth__content-item-input'}
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-                type="password"
-                placeholder='password'
-            />
-            <input
-                className={'auth__content-item-input'}
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-                type="password"
-                placeholder='password'
-            />
-
-            <button className={'auth__content-item-btn'} onClick={(e) => addUser(e)}>Register</button>
+        <div className="form-container sign-up-container">
+            <form action="#">
+                <h1>Create Account</h1>
+                <input
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    type="text"
+                    placeholder='email'
+                />
+                <input
+                    className={'auth__content-item-input'}
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    type="password"
+                    placeholder='password'
+                />
+                <input
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    type="password"
+                    placeholder='password'
+                />
+                <button onClick={(e) => addUser(e)}>Sign Up</button>
+            </form>
         </div>
     )
 }
