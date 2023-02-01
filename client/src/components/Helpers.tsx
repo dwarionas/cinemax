@@ -113,7 +113,7 @@ export const PlusIcon: React.FC<IBtnProps> = ({ classText }) => {
         <button className={classText}>
             <svg width={width} height={height} viewBox="0 0 24 24" >
                 <path
-                    fill="#fff" d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z">
+                    fill="#282C31" d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z">
                 </path>
             </svg>
 
@@ -124,29 +124,47 @@ export const PlusIcon: React.FC<IBtnProps> = ({ classText }) => {
     )
 }
 
-export const StarIcon: React.FC<IStarProps> = ({ rate }) => {
-    const yellow = '#F9B601';
-    const grey = '#9b9b9b';
-
+export const Rating: React.FC<IStarProps> = ({ rate }) => {
     return (
-        <div className={'home__main-stars'}>
-            {
-                [...Array(Math.round(rate / 2))].map(x => ++x).map((_, i) => (
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{ marginRight: '4px' }}>
-                        <path fill={yellow} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z" />
-                    </svg>
-                ))
-            }
-            {
-                [...Array(5 - Math.round(rate / 2))].map(x => ++x).map((_, i) => (
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{ marginRight: '4px' }}>
-                        <path fill={grey} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z" />
-                    </svg>
-                ))
-            }
+        <div
+            className="rating"
+            style={{
+                background: `conic-gradient(${rate > 7 ? '#00cc66' : rate < 3 ? '#ff3333' : '#ffaa33'} ${rate * 10}%, ${rate > 7 ? '#1e3228' : rate < 3 ? '#342020' : '#372f23'} ${rate * 10}% ${rate * 10}%)`,
+            }}
+        >
+            <span className="rating-value"
+                style={{
+                    backgroundColor: `${rate > 7 ? '#1e3228' : rate < 3 ? '#342020' : '#372f23'}`,
+                    color: `${rate > 7 ? '#00cc66' : rate < 3 ? '#ff3333' : '#ffaa33'}`
+                }}
+            >{rate}</span>
         </div>
     )
 }
+
+// export const StarIcon: React.FC<IStarProps> = ({ rate }) => {
+//     const yellow = '#F9B601';
+//     const grey = '#9b9b9b';
+
+//     return (
+//         <div className={'home__main-stars'}>
+//             {
+//                 [...Array(Math.round(rate / 2))].map(x => ++x).map((_, i) => (
+//                     <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{ marginRight: '4px' }}>
+//                         <path fill={yellow} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z" />
+//                     </svg>
+//                 ))
+//             }
+//             {
+//                 [...Array(5 - Math.round(rate / 2))].map(x => ++x).map((_, i) => (
+//                     <svg key={i} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 19" width={'30px'} height={'30px'} style={{ marginRight: '4px' }}>
+//                         <path fill={grey} d="M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z" />
+//                     </svg>
+//                 ))
+//             }
+//         </div>
+//     )
+// }
 
 // export const ArrowLeft = () => {
 //     return (
@@ -171,5 +189,5 @@ export const DetectGenres: React.FC<IDetectGenresProps> = ({ genresArray }) => {
 export const preventAnim = () => {
     const body = document.querySelector('body') as HTMLBodyElement;
     body.classList.add('preload');
-    setTimeout(() => body.classList.remove('preload'), 500);
+    setTimeout(() => body.classList.remove('preload'), 200);
 }

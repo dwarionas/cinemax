@@ -7,9 +7,9 @@ import HomeContent from "./HomeContent";
 const Home: React.FC = () => {
     return (
         <div className={'home'}>
-            <NavHome/>
+            <NavHome />
 
-            <HomeContent/>
+            <HomeContent />
         </div>
     );
 };

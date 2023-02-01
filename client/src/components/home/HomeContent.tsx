@@ -53,7 +53,7 @@ const HomeContent: React.FC = () => {
     return (
         <div className={'home__content'}>
             {slider.data?.getSlider.filter((_: IData, i: number) => i === activeItem).map((item: IData) => (
-                <HomeMain item={item} key={item.id}/>
+                <HomeMain item={item} key={item.id} />
             ))}
 
             <div className={'home__slider'}>

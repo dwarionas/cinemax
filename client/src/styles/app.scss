@@ -1,3 +1,5 @@
+@import './variables';
+
 .app {
   display: flex;
   height: 100vh;
@@ -7,8 +9,9 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100px;
-    background-color: #1F2326;
+    background-color: $light;
     padding: 25px 5px;
+    border-right: 0.1px solid #DCDCDC;
 
     &__wrapper {
       display: flex;
@@ -25,7 +28,11 @@
 
         &:hover {
           border-radius: 5px;
-          background-color: #282C31;
+          background-color: #87314e;
+        }
+
+        &:hover svg path {
+          fill: #fff;
         }
 
         &:last-child {
@@ -35,7 +42,7 @@
 
       &__item.active {
         border-radius: 5px;
-        background-color: #282C31;
+        background-color: #bb394f;
         width: 50px;
         height: 50px;
         display: flex;
@@ -51,9 +58,9 @@
     }
 
   }
-  
+
   &__content {
-    background-color: #1D2024;
+    background-color: $light;
     width: 100vw;
     max-width: 100%;
     overflow: hidden;

@@ -1,17 +1,15 @@
-$base-color: #104847;
-$base-color-active: #14C6B0;
-$base-color-inactive: #282C31;
+@import './variables';
 
 @keyframes sliderAnim {
-	0% {
-		transform: scaleY(0.4);
-		transform-origin: 0% 100%;
-	}
+  0% {
+    transform: scaleY(0.4);
+    transform-origin: 0% 100%;
+  }
 
-	100% {
-		transform: scaleY(1);
-		transform-origin: 0% 100%;
-	}
+  100% {
+    transform: scaleY(1);
+    transform-origin: 0% 100%;
+  }
 }
 
 @keyframes imgAnim {
@@ -19,16 +17,19 @@ $base-color-inactive: #282C31;
     transform: scale(0.9);
     transform-origin: 50% 100%;
   }
+
   100% {
     transform: scale(1);
     transform-origin: 50% 100%;
   }
 }
+
 @keyframes imgAnim-end {
   0% {
     transform: scale(1.1);
     transform-origin: 50% 100%;
   }
+
   100% {
     transform: scale(1);
     transform-origin: 50% 100%;
@@ -39,14 +40,17 @@ $base-color-inactive: #282C31;
   0% {
     width: 88%;
   }
+
   100% {
     width: 95%;
   }
 }
+
 @keyframes textAnim-end {
   0% {
     width: 95%;
   }
+
   100% {
     width: 150px;
   }
@@ -63,8 +67,9 @@ $base-color-inactive: #282C31;
     text-align: center;
     vertical-align: middle;
 
-    &__li, &__li__active {
-      background-color: $base-color-inactive;
+    &__li,
+    &__li__active {
+      background-color: $dark;
       width: 150px;
       height: 50px;
       border-radius: 5px;
@@ -73,12 +78,14 @@ $base-color-inactive: #282C31;
       line-height: 50px;
       margin-right: 20px;
       cursor: pointer;
+
       &:last-child {
         margin-right: 0px;
       }
 
       &__active {
-        background-color: $base-color-active;
+        background-color: $lighter-middle;
+
         &:last-child {
           margin-right: 0px;
         }
@@ -102,23 +109,27 @@ $base-color-inactive: #282C31;
 
     &-header {
       width: 500%;
-      color: #fff;
+      color: $dark;
       font-size: 40px;
     }
+
     &-stars {
       margin-top: 10px;
     }
+
     &-genre {
       width: 500%;
       margin-top: 10px;
       color: gray;
       font-size: 20px;
     }
+
     &-buttons {
       margin-top: 15px;
       display: flex;
       flex-direction: row;
     }
+
     &-button {
       width: 70px;
       height: 55px;
@@ -127,25 +138,37 @@ $base-color-inactive: #282C31;
       display: flex;
       justify-content: center;
       align-items: center;
+
       &:hover {
-        background-color: $base-color-inactive;
         cursor: pointer;
       }
+
       &:first-child {
         border: none;
         border-bottom-left-radius: 5px;
         border-top-left-radius: 5px;
-        background-color: $base-color-active;
+        background-color: $lighter-middle;
+
         &:active {
-          background-color: $base-color;
+          background-color: $darker-middle;
         }
       }
+
       &:last-child {
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;
         border-left-color: transparent;
+
+        &:active {
+          background-color: $lighter-middle;
+        }
+
+        &:active svg path {
+          fill: $light;
+        }
       }
     }
+
     &-description {
       height: 100px;
       margin-top: 15px;
@@ -159,11 +182,12 @@ $base-color-inactive: #282C31;
     bottom: 80px;
     width: 100%;
     //z-index: 100;
-    background-color: #1F2326;
-    box-shadow: 0px 0px 40px 40px #1F2326;
+    background-color: $light;
+    box-shadow: 0px 0px 40px 40px $light;
     height: 300px;
 
-    &-inactive-img, &-active-img {
+    &-inactive-img,
+    &-active-img {
       border: 0.1px solid gray;
       display: block;
       margin: 0 auto;
@@ -171,27 +195,32 @@ $base-color-inactive: #282C31;
 
     &-inactive-img {
       width: 150px;
-      animation: imgAnim-end 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
+      animation: imgAnim-end 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
     }
+
     &-active-img {
       width: 168px;
-      animation: imgAnim 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) none;
+      animation: imgAnim 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) none;
     }
-    &-title-inactive, &-title-active {
+
+    &-title-inactive,
+    &-title-active {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
       display: block;
       margin: 0 auto;
     }
+
     &-title-inactive {
       width: 155px;
       color: gray;
       animation: textAnim-end 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
     }
+
     &-title-active {
       width: 95%;
-      color: white;
+      color: $dark;
       animation: textAnim 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) none;
     }
   }
@@ -200,11 +229,41 @@ $base-color-inactive: #282C31;
     transform: translateY(-25px);
 
   }
-  &-inactive-block {
 
-  }
+  &-inactive-block {}
 }
 
 .swiper-wrapper {
   margin-top: 30px;
+}
+
+.rating {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  display: grid;
+  place-items: center;
+
+  .rating-value {
+    display: block;
+    height: calc(100% - 8px);
+    width: calc(100% - 8px);
+    // background-color: rgb(25, 25, 52) !important;
+    color: white;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    font-size: 18px;
+    position: relative;
+
+    .percentage {
+      position: absolute;
+      right: 5px;
+      top: 8px;
+      font-size: 8px;
+    }
+  }
 }
