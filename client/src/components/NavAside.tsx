@@ -37,6 +37,12 @@ const NavAside: React.FC = () => {
                 <div
                     className={'app__nav__wrapper__item'}
                 >
+                    <ProfileIcon color={'#56585C'} />
+                </div>
+
+                <div
+                    className={'app__nav__wrapper__item'}
+                >
                     <RecentIcon color={'#56585C'} />
                 </div>
 

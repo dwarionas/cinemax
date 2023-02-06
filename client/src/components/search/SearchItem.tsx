@@ -25,7 +25,7 @@ const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
                     <div className='search__main-content-wrapper-item-container-noimage' >Image not found</div>
                 }
                 <div className='search__main-content-wrapper-item-container-btns' style={hover ? { display: 'flex' } : { display: 'none' }}>
-                    <PlayIcon classText={'search__main-content-wrapper-item-container-btn'} />
+                    <PlayIcon classText={'search__main-content-wrapper-item-container-btn'} id={item.id} />
                     <PlusIcon classText={'search__main-content-wrapper-item-container-btn'} />
                 </div>
             </div>

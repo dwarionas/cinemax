@@ -10,7 +10,6 @@ import { setUser, setIsLogged } from "./redux/slices/authSlice";
 
 import NavAside from "./components/NavAside";
 import AuthModal from "./components/auth/AuthModal";
-import Aside from './components/aside/Aside';
 
 const App: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -42,8 +41,6 @@ const App: React.FC = () => {
                 <Outlet />
                 {isAuthModalActive ? <AuthModal /> : null}
             </main>
-
-            <Aside />
         </div>
     );
 };

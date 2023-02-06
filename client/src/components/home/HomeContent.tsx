@@ -27,6 +27,7 @@ const HomeContent: React.FC = () => {
 
     React.useEffect(() => {
         fetchGenres();
+        console.log(genres)
         dispatch(setGenresList(genres.data?.getGenres));
         preventAnim();
     }, []);
@@ -57,7 +58,7 @@ const HomeContent: React.FC = () => {
             ))}
 
             <div className={'home__slider'}>
-                <Swiper slidesPerView={6} className={'home__swiper'} >
+                <Swiper slidesPerView={8} className={'home__swiper'} >
                     {!isAuthModalActive && slider.data?.getSlider.map((item: IData, i: number) => (
                         <SwiperSlide
                             key={item.id}
