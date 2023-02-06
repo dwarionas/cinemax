@@ -5,7 +5,7 @@ import { graphqlHTTP } from 'express-graphql';
 import { buildSchema } from 'graphql';
 import { readFileSync } from 'fs';
 import cors from 'cors';
-import root from "./root.js";
+import resolvers from "./root.js";
 
 const PORT = process.env.PORT || 5000;
 
@@ -22,7 +22,7 @@ app.use(
     graphqlHTTP({
         graphiql: true,
         schema,
-        rootValue: root,
+        rootValue: resolvers,
     }),
 );
 

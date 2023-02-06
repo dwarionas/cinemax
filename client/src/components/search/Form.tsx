@@ -29,9 +29,9 @@ const Form: React.FC<IProps> = ({ onSubmitForm, localQuery, setLocalQuery, onCha
         document.addEventListener("click", handleClick);
         return () => document.removeEventListener("click", handleClick);
         function handleClick(e: any) {
-            if(formRef && formRef.current){
+            if (formRef && formRef.current) {
                 const ref: any = formRef.current
-                if(!ref.contains(e.target)){
+                if (!ref.contains(e.target)) {
                     setIsPopupVisible(false);
                 }
             }
@@ -41,7 +41,6 @@ const Form: React.FC<IProps> = ({ onSubmitForm, localQuery, setLocalQuery, onCha
     const clearInput = () => {
         if (localQuery) {
             setLocalQuery('');
-            dispatch(setQuery(''));
             setIsPopupVisible(false);
         }
     }
@@ -49,10 +48,10 @@ const Form: React.FC<IProps> = ({ onSubmitForm, localQuery, setLocalQuery, onCha
     return (
         <form onSubmit={onSubmitForm} className={'search__main-form'} ref={formRef}>
             <button
-                type="submit" 
+                type="submit"
                 className={'search__main-form-btn search__main-form-btn-search'}
             >
-                <SearchPageIcon color={'#fff'}/>
+                <SearchPageIcon color={'#fff'} />
             </button>
 
             <div className={'search__main-form-input-wrapper'}>
@@ -78,12 +77,12 @@ const Form: React.FC<IProps> = ({ onSubmitForm, localQuery, setLocalQuery, onCha
                         <li className={'search__main-form-ul-li'}>Load more data... (414)</li> : null}
                 </ul>
             </div>
-            
+
             <button
                 className={'search__main-form-btn search__main-form-btn-clear'}
                 onClick={() => clearInput()}
             >
-                <CrossIcon color={'#fff'}/>
+                <CrossIcon color={'#fff'} />
             </button>
         </form>
     )

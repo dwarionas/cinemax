@@ -34,23 +34,17 @@ const NavAside: React.FC = () => {
                     children={({ isActive }) => <SearchIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
-                <NavLink
-                    to={'/recent'}
+                <div
                     className={'app__nav__wrapper__item'}
-                    children={({ isActive }) => <RecentIcon color={isActive ? '#fff' : '#56585C'} />}
-                />
+                >
+                    <RecentIcon color={'#56585C'} />
+                </div>
 
-                <NavLink
-                    to={'/profile'}
+                <div
                     className={'app__nav__wrapper__item'}
-                    children={({ isActive }) => <ProfileIcon color={isActive ? '#fff' : '#56585C'} />}
-                />
-
-                <NavLink
-                    to={'/settings'}
-                    className={'app__nav__wrapper__item'}
-                    children={({ isActive }) => <SettingsIcon color={isActive ? '#fff' : '#56585C'} />}
-                />
+                >
+                    <SettingsIcon color={'#56585C'} />
+                </div>
             </div>
             <div className={'app__nav__logout'}>
                 {!isLogged ?

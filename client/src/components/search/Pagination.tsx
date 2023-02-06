@@ -30,10 +30,11 @@ const Pagination: React.FC<IProps> = ({ onChangePage, setLocalPage, localPage, t
                 setLocalPage(e.selected + 1)
                 onChangePage(e.selected + 1)
                 dispatch(setCurrentPage(e.selected + 1))
+                scrollTo(0, 0)
             }}
             pageRangeDisplayed={10}
             pageCount={totalPages > 40 ? 40 : totalPages}
-            // forcePage={localPage}
+        // forcePage={localPage}
         />
     );
 };

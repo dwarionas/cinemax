@@ -20,49 +20,49 @@ startDB();
 const createUser = (input) => {
     const id = String(Date.now());
     const role = 'user';
-    return {id, role, ...input};
+    return { id, role, ...input };
 }
 
-const root = {
+const resolvers = {
     getAllUsers: async () => {
         const users = client.db().collection('users');
         const allUsers = await users.find().toArray()
         return allUsers;
     },
-    createUser: async ({input}) => {
+    createUser: async ({ input }) => {
         const user = createUser(input);
         const users = client.db().collection('users');
-        const candidate = await users.findOne({email: user.email});
+        const candidate = await users.findOne({ email: user.email });
         if (candidate) {
-            return {emailError: true}
+            return { emailError: true }
         }
 
         const hashedPassword = bcrypt.hashSync(user.password, 7);
-        await users.insertOne({...user, password: hashedPassword});
-        return {emailError: false, ...user, password: hashedPassword}
+        await users.insertOne({ ...user, password: hashedPassword });
+        return { emailError: false, ...user, password: hashedPassword }
     },
-    login: async ({email, password}) => {
+    login: async ({ email, password }) => {
         const users = client.db().collection('users');
-        const user = await users.findOne({email});
+        const user = await users.findOne({ email });
         if (!user) {
-            return {emailError: true}
+            return { emailError: true }
         }
 
         const isPasswordValid = bcrypt.compareSync(password, user.password)
         if (!isPasswordValid) {
-            return {emailError: false, passwordError: true}
+            return { emailError: false, passwordError: true }
         }
 
-        return {emailError: false, passwordError: false, ...user};
+        return { emailError: false, passwordError: false, ...user };
     },
-    checkUser: async ({id}) => {
+    checkUser: async ({ id }) => {
         const users = client.db().collection('users');
-        const user = await users.findOne({id})
+        const user = await users.findOne({ id })
         if (!user) {
-            return {idError: true}
+            return { idError: true }
         }
 
-        return {idError: false, ...user};
+        return { idError: false, ...user };
     },
 
     getSlider: async (props) => {
@@ -97,7 +97,7 @@ const root = {
         const searchSliceResponse = await axios.get(`${BASE}/search/multi?api_key=${API_KEY}&query=${searchQuery}&page=${page}&language=en-US`);
         return searchSliceResponse.data.results.slice(0, 4);
     },
-    
+
     getDetails: async (props) => {
         const { type, id } = props;
         const response = await axios.get(`${BASE}/${type}/${id}?api_key=${API_KEY}`);
@@ -105,4 +105,4 @@ const root = {
     },
 };
 
-export default root;
+export default resolvers;

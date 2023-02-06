@@ -57,7 +57,7 @@ const HomeContent: React.FC = () => {
             ))}
 
             <div className={'home__slider'}>
-                <Swiper slidesPerView={8} className={'home__swiper'} >
+                <Swiper slidesPerView={6} className={'home__swiper'} >
                     {!isAuthModalActive && slider.data?.getSlider.map((item: IData, i: number) => (
                         <SwiperSlide
                             key={item.id}

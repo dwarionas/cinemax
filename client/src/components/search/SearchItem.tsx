@@ -8,19 +8,31 @@ interface IProps {
 }
 
 const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
+    const [hover, setHover] = React.useState<boolean>(false)
+
     return (
-        <div onClick={() => onSelectItem(item.id, item.media_type)} className={'search__main-content-wrapper-item'}>
-            <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <span style={{fontSize: '15px'}}>{item.title || item.name}</span>
-                <span style={{color: 'grey'}}>{item.first_air_date?.slice(0, 4) || item.release_date?.slice(0, 4)}</span>
+        <div
+            onClick={() => onSelectItem(item.id, item.media_type)}
+            className={'search__main-content-wrapper-item'}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            title={item.title || item.name}
+        >
+            <div className='search__main-content-wrapper-item-container'>
+                {item.poster_path ?
+                    <img src={`https://image.tmdb.org/t/p/original/${item.poster_path}`} className={'search__main-content-wrapper-item-container-image'} />
+                    :
+                    <div className='search__main-content-wrapper-item-container-noimage' >Image not found</div>
+                }
+                <div className='search__main-content-wrapper-item-container-btns' style={hover ? { display: 'flex' } : { display: 'none' }}>
+                    <PlayIcon classText={'search__main-content-wrapper-item-container-btn'} />
+                    <PlusIcon classText={'search__main-content-wrapper-item-container-btn'} />
+                </div>
             </div>
 
-            <div>
-                <img src={`https://image.tmdb.org/t/p/original/${item.poster_path}`} className={'search__main-content-wrapper-item-image'} />
-                <div className='search__main-content-wrapper-item-btns'>
-                    <PlayIcon classText={'search__main-content-wrapper-item-btn'}/>
-                    <PlusIcon classText={'search__main-content-wrapper-item-btn'}/>
-                </div>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                <span className='search__main-content-wrapper-item-text' style={{ fontSize: '15px' }}>{item.title || item.name}</span>
+                <span style={{ color: 'grey' }}>{item.first_air_date?.slice(0, 4) || item.release_date?.slice(0, 4)}</span>
             </div>
         </div>
     );
