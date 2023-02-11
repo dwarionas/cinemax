@@ -5,6 +5,11 @@ export interface IGlobal {
     total_results: number;
 }
 
+export interface IGenre {
+    id: number;
+    name: string;
+}
+
 export interface IData {
     adult?: boolean;
     backdrop_path: string | null;
@@ -23,7 +28,7 @@ export interface IData {
     vote_count?: number;
     name?: string;
     origin_country: string[];
-    media_type : 'movie' | 'tv';
+    media_type: 'movie' | 'tv';
     first_air_date: string;
 }
 
@@ -43,10 +48,7 @@ export interface IDetalizedData extends IData {
     }[];
     episode_run_time?: number[];
     budget?: number;
-    genres: {
-        id: number;
-        name: string;
-    }[];
+    genres: IGenre[];
     homepage: string;
     imdb_id?: string;
     in_production?: boolean;
@@ -104,11 +106,6 @@ export interface IDetalizedData extends IData {
         season_number: number;
     }[];
     type?: string;
-}
-
-export interface IGenre {
-    id: number;
-    name: string;
 }
 
 export interface IUser {

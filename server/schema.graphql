@@ -6,6 +6,7 @@ type Query {
     getSearch(searchQuery: String!, page: Int!): Global!
     getSliced(searchQuery: String!, page: Int!): [Data]!
     getDetails(type: String!, id: Int!): [Data]!
+    getDiscover(genres: String!): [Data]!
 
     getAllUsers: [User]!
     checkUser(id: String!): userReturn
@@ -65,6 +66,30 @@ type Genre {
     name: String
 }
 
+type ProdCountries {
+    name: String
+}
+
+type ProdCompanies {
+    name: String
+}
+
+type CreatedBy {
+    name: String
+    profile_path: String
+    id: Int
+}
+
+type Languages {
+    english_name: String
+}
+
+type Collection {
+    name: String
+    poster_path: String
+    id: Int
+}
+
 type Data {
     adult: Boolean
     backdrop_path: String
@@ -85,5 +110,14 @@ type Data {
     origin_country: [String]
     media_type: String
     first_air_date: String
+    genres: [Genre]
+    production_countries: [ProdCountries]
+    spoken_languages: [Languages]
+    created_by: [CreatedBy]
+    runtime: Int
+    episode_run_time: [Int]
+    production_companies: [ProdCompanies]
+    belongs_to_collection: Collection
+    tagline: String
 }
 

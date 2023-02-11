@@ -8,5 +8,7 @@ query GetSliderData($page: Int!, $genre: String!) {
         vote_average
         genre_ids
         backdrop_path
+        media_type
+        first_air_date
     }
 }

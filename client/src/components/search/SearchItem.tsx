@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { IData } from "../../types";
 import { PlayIcon, PlusIcon } from '../Helpers';
 
@@ -25,7 +26,11 @@ const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
                     <div className='search__main-content-wrapper-item-container-noimage' >Image not found</div>
                 }
                 <div className='search__main-content-wrapper-item-container-btns' style={hover ? { display: 'flex' } : { display: 'none' }}>
-                    <PlayIcon classText={'search__main-content-wrapper-item-container-btn'} id={item.id} />
+                    <Link
+                        to={`/${item.first_air_date ? 'tv' : 'movie'}/${item.id}`}
+                        className={'search__main-content-wrapper-item-container-btn'}>
+                        <PlayIcon />
+                    </Link>
                     <PlusIcon classText={'search__main-content-wrapper-item-container-btn'} />
                 </div>
             </div>

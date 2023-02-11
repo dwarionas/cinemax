@@ -4,7 +4,7 @@ import { useAppDispatch, RootState } from "../../redux/store";
 import { setGenresList, setActiveItem } from "../../redux/slices/homeSlice";
 import { preventAnim } from "../Helpers";
 
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import getSlider from '../../graphql/queries/home/slider.graphql';
 import getGenres from '../../graphql/queries/home/genres.graphql';
 
@@ -23,16 +23,17 @@ const HomeContent: React.FC = () => {
     const { isAuthModalActive } = useSelector((state: RootState) => state.auth);
 
     const [fetchSlider, slider] = useLazyQuery(getSlider);
-    const [fetchGenres, genres] = useLazyQuery(getGenres);
+    const { data: genres } = useQuery(getGenres);
 
     React.useEffect(() => {
-        fetchGenres();
-        console.log(genres)
-        dispatch(setGenresList(genres.data?.getGenres));
+        if (genres?.getGenres) {
+            dispatch(setGenresList(genres?.getGenres));
+        }
+    }, [genres]);
+
+    React.useEffect(() => {
         preventAnim();
-    }, []);
 
-    React.useEffect(() => {
         if (activeCategory === 0) {
             fetchSlider({
                 variables: {
@@ -67,7 +68,7 @@ const HomeContent: React.FC = () => {
                             title={item.title || item.name}
                         >
                             <HomeSlider
-                                img={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
+                                img={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                                 title={item.title as string || item.name as string}
                                 key={item.id}
                                 imgClassName={i === activeItem ? 'home__slider-active-img' : 'home__slider-inactive-img'}

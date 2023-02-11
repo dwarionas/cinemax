@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../redux/store";
 import { NavLink } from "react-router-dom";
 import { HomeIcon, ProfileIcon, RecentIcon, SearchIcon, SettingsIcon, LoginIcon, LogoutIcon } from "./Helpers";
-import { setAuthModalActive, setIsLogged } from "../redux/slices/authSlice";
+import { setAuthModalActive, setIsLogged, setUser } from "../redux/slices/authSlice";
 
 const NavAside: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -14,6 +14,11 @@ const NavAside: React.FC = () => {
             window.localStorage.removeItem('isLogged');
             window.localStorage.removeItem('token');
             dispatch(setIsLogged(false));
+            dispatch(setUser({
+                email: '',
+                id: '',
+                role: '',
+            }))
         } else {
             console.log('not auth')
         }

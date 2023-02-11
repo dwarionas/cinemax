@@ -103,6 +103,11 @@ const resolvers = {
         const response = await axios.get(`${BASE}/${type}/${id}?api_key=${API_KEY}`);
         return [response.data];
     },
+
+    getDiscover: async ({ genres }) => {
+        const response = await axios.get(`${BASE}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=1&with_genres=${genres}`);
+        return response.data.results;
+    }
 };
 
 export default resolvers;

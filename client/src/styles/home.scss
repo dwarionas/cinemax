@@ -111,6 +111,7 @@
       width: 500%;
       color: $dark;
       font-size: 40px;
+      margin-bottom: 10px;
     }
 
     &-stars {
@@ -242,7 +243,6 @@
   width: 50px;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin-top: 10px;
   display: grid;
   place-items: center;
 

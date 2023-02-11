@@ -1,8 +1,0 @@
-query GetDetailsData($type: String!, $id: Int!) {
-    getDetails(type: $type, id: $id) {
-        title
-        name
-        id
-        poster_path
-    }
-}
