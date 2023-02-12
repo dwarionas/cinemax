@@ -20,7 +20,8 @@ startDB();
 const createUser = (input) => {
     const id = String(Date.now());
     const role = 'user';
-    return { id, role, ...input };
+    const bookmarks = [];
+    return { id, role, bookmarks, ...input };
 }
 
 const resolvers = {
@@ -29,6 +30,7 @@ const resolvers = {
         const allUsers = await users.find().toArray()
         return allUsers;
     },
+
     createUser: async ({ input }) => {
         const user = createUser(input);
         const users = client.db().collection('users');
@@ -41,6 +43,17 @@ const resolvers = {
         await users.insertOne({ ...user, password: hashedPassword });
         return { emailError: false, ...user, password: hashedPassword }
     },
+    addBookmark: async ({ input }) => {
+        const users = client.db().collection('users');
+
+        await users.updateOne(
+            { id: input.userID },
+            { $addToSet: { bookmarks: { type: input.type, id: input.id } } }
+        )
+
+        return { ...input }
+    },
+
     login: async ({ email, password }) => {
         const users = client.db().collection('users');
         const user = await users.findOne({ email });
@@ -55,6 +68,7 @@ const resolvers = {
 
         return { emailError: false, passwordError: false, ...user };
     },
+
     checkUser: async ({ id }) => {
         const users = client.db().collection('users');
         const user = await users.findOne({ id })
@@ -64,6 +78,8 @@ const resolvers = {
 
         return { idError: false, ...user };
     },
+
+
 
     getSlider: async (props) => {
         const { page, genre } = props;

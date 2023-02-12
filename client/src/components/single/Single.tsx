@@ -109,6 +109,8 @@ const Single: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* <div className='single__divider' /> */}
+
                     <div className="single__similar">
                         <span className='single__similar-title'>More like this</span>
 

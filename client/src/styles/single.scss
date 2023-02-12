@@ -1,7 +1,5 @@
 @import './variables';
 
-@import './variables';
-
 .single {
     overflow: auto;
     width: 100%;
@@ -98,11 +96,16 @@
         }
     }
 
-    &__similar {
+    &__divider {
         height: 100%;
+        width: 0.1px;
+        background-color: $dark;
+    }
+
+    &__similar {
+        // height: 100%;
         padding-left: 25px;
         width: 25%;
-        border-left: 1px solid $dark;
 
         &-title {
             font-size: 25px;
