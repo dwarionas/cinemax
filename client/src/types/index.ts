@@ -108,8 +108,14 @@ export interface IDetalizedData extends IData {
     type?: string;
 }
 
+export interface IBookmark {
+    type: string;
+    id: number;
+}
+
 export interface IUser {
     email: string;
     id: string;
     role: string;
+    bookmarks: IBookmark[];
 }

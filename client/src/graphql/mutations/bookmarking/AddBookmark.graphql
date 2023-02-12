@@ -1,0 +1,6 @@
+mutation AddBookmark($input: bookmark) {
+    addBookmark(input: $input) {
+        type
+        id
+    }
+}

@@ -13,6 +13,7 @@ const initialState: IState = {
         email: '',
         id: '',
         role: '',
+        bookmarks: []
     },
     isLogged: false,
     isAuthModalActive: false
@@ -25,6 +26,9 @@ const authSlice = createSlice({
         setUser: (state, action: PayloadAction<IUser>) => {
             state.user = action.payload;
         },
+        setBookmarks: (state, action) => {
+            state.user.bookmarks = action.payload
+        },
         setIsLogged: (state, action: PayloadAction<boolean>) => {
             state.isLogged = action.payload;
         },
@@ -34,5 +38,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setUser, setIsLogged, setAuthModalActive } = authSlice.actions;
+export const { setUser, setBookmarks, setIsLogged, setAuthModalActive } = authSlice.actions;
 export default authSlice.reducer;
