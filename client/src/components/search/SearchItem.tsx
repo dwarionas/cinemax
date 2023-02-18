@@ -2,6 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IData } from "../../types";
 import { PlayIcon, PlusIcon } from '../Helpers';
+import { createBookmark } from '../bookmarking/addBookmark';
+
+import { useMutation } from '@apollo/client';
+import { useSelector } from "react-redux";
+import { useAppDispatch, RootState } from "../../redux/store";
+import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql';
+import { setBookmarks } from '../../redux/slices/authSlice';
 
 interface IProps {
     item: IData;
@@ -9,7 +16,15 @@ interface IProps {
 }
 
 const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
-    const [hover, setHover] = React.useState<boolean>(false)
+    const [hover, setHover] = React.useState<boolean>(false);
+
+    const type = item.first_air_date ? 'tv' : 'movie'
+    const id = item.id;
+
+    const dispatch = useAppDispatch();
+    const userID = useSelector((state: RootState) => state.auth.user.id)
+
+    const [bookmark] = useMutation(addBookmark);
 
     return (
         <div
@@ -31,7 +46,9 @@ const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
                         className={'search__main-content-wrapper-item-container-btn'}>
                         <PlayIcon />
                     </Link>
-                    <PlusIcon classText={'search__main-content-wrapper-item-container-btn'} />
+                    <div onClick={() => createBookmark({ bookmark, setBookmarks, dispatch, id, type, userID })}>
+                        <PlusIcon classText={'search__main-content-wrapper-item-container-btn'} />
+                    </div>
                 </div>
             </div>
 

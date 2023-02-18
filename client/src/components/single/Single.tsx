@@ -2,12 +2,18 @@ import React from 'react'
 import '../../styles/single.scss'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router'
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import getDetails from '../../graphql/queries/single/details.graphql';
 import getDiscover from '../../graphql/queries/single/discover.graphql';
+import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql';
 import { IData, IDetalizedData, IGenre } from '../../types';
 
 import { PlayIcon, PlusIcon, Rating } from '../Helpers';
+import { createBookmark } from '../bookmarking/addBookmark';
+
+import { useSelector } from "react-redux";
+import { useAppDispatch, RootState } from "../../redux/store";
+import { setBookmarks } from '../../redux/slices/authSlice';
 
 const Single: React.FC = () => {
     const params = useParams();
@@ -26,6 +32,14 @@ const Single: React.FC = () => {
             fetchDiscover({ variables: { genres: details.getDetails[0].genres.map((item: IGenre) => item.name).join(', ') } })
         }
     }, [details]);
+
+    const type = details?.getDetails[0]?.first_air_date ? 'tv' : 'movie'
+    const id = details?.getDetails[0]?.id;
+
+    const dispatch = useAppDispatch();
+    const userID = useSelector((state: RootState) => state.auth.user.id)
+
+    const [bookmark] = useMutation(addBookmark);
 
     return (
         <>
@@ -48,7 +62,9 @@ const Single: React.FC = () => {
                                     <span style={{ alignSelf: 'center' }}><Rating rate={item.vote_average} /></span>
                                     <div className={'home__main-buttons'} style={{ margin: '0', marginLeft: '10px' }}>
                                         <button className={'home__main-button'}><PlayIcon /></button>
-                                        <PlusIcon classText={'home__main-button'} />
+                                        <div onClick={() => createBookmark({ bookmark, setBookmarks, dispatch, id, type, userID })}>
+                                            <PlusIcon classText={'home__main-button'} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

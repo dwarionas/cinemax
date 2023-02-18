@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IData } from "../../types";
 import { Rating, PlayIcon, PlusIcon, DetectGenres } from "../Helpers";
-// import { createBookmark } from '../bookmarking/addBookmark';
+import { createBookmark } from '../bookmarking/addBookmark';
 
 import { useMutation } from '@apollo/client';
 import { useSelector } from "react-redux";
@@ -19,19 +19,6 @@ const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
 
     const [bookmark] = useMutation(addBookmark);
 
-    const createBookmark = (type: string, id: number) => {
-
-        bookmark({
-            variables: {
-                input: {
-                    type,
-                    id,
-                    userID
-                }
-            }
-        }).then(({ data }) => dispatch(setBookmarks(data)))
-    }
-
 
     return (
         <div className={'home__main'} >
@@ -42,7 +29,7 @@ const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
                 <Link to={`/${item.first_air_date ? 'tv' : 'movie'}/${item.id}`} className={'home__main-button'}>
                     <PlayIcon />
                 </Link>
-                <div onClick={() => createBookmark(type, id)}>
+                <div onClick={() => createBookmark({ bookmark, setBookmarks, dispatch, id, type, userID })}>
                     <PlusIcon classText={'home__main-button'} />
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from "../../types";
+import { IUser, IBookmark } from "../../types";
 
 interface IState {
     user: IUser;
@@ -26,8 +26,8 @@ const authSlice = createSlice({
         setUser: (state, action: PayloadAction<IUser>) => {
             state.user = action.payload;
         },
-        setBookmarks: (state, action) => {
-            state.user.bookmarks = action.payload
+        setBookmarks: (state, action: PayloadAction<IBookmark>) => {
+            state.user.bookmarks.push(action.payload);
         },
         setIsLogged: (state, action: PayloadAction<boolean>) => {
             state.isLogged = action.payload;

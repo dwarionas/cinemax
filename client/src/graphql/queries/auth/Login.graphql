@@ -6,5 +6,9 @@ query Login($email: String!, $password: String!) {
         password
         email
         role
+        bookmarks {
+            id
+            type
+        }
     }
 }

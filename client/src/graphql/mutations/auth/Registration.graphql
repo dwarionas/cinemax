@@ -6,5 +6,9 @@ mutation CreateUser($input: auth) {
         password
         email
         role
+        bookmarks {
+            id
+            type
+        }
     }
 }

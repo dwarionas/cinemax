@@ -1,23 +1,25 @@
-// import { useMutation } from '@apollo/client';
-// import { useSelector } from "react-redux";
-// import { useAppDispatch, RootState } from "../../redux/store";
-// import addBookmark from '../../graphql/mutations/bookmarking/addBookmark.graphql';
-// import { setBookmarks } from '../../redux/slices/authSlice';
+import { IBookmark } from "../../types";
 
-// const [bookmark] = useMutation(addBookmark);
+interface IProps {
+    bookmark: any;
+    setBookmarks: any;
+    type: string;
+    id: number;
+    dispatch: any;
+    userID: string;
+}
 
-// export const createBookmark = (type: string, id: number) => {
-//     const dispatch = useAppDispatch();
-//     const userID = useSelector((state: RootState) => state.auth.user.id)
 
-//     bookmark({
-//         variables: {
-//             input: {
-//                 type,
-//                 id,
-//                 userID
-//             }
-//         }
-//     }).then(({ data }) => dispatch(setBookmarks(data)))
-// }
-export const mauna = () => { };
+export const createBookmark = (props: IProps) => {
+    const { bookmark, setBookmarks, type, id, dispatch, userID } = props;
+
+    bookmark({
+        variables: {
+            input: {
+                type,
+                id,
+                userID
+            }
+        }
+    }).then((data: { data: { addBookmark: IBookmark } }) => dispatch(setBookmarks(data.data.addBookmark)))
+}

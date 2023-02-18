@@ -43,16 +43,6 @@ const resolvers = {
         await users.insertOne({ ...user, password: hashedPassword });
         return { emailError: false, ...user, password: hashedPassword }
     },
-    addBookmark: async ({ input }) => {
-        const users = client.db().collection('users');
-
-        await users.updateOne(
-            { id: input.userID },
-            { $addToSet: { bookmarks: { type: input.type, id: input.id } } }
-        )
-
-        return { ...input }
-    },
 
     login: async ({ email, password }) => {
         const users = client.db().collection('users');
@@ -79,7 +69,16 @@ const resolvers = {
         return { idError: false, ...user };
     },
 
+    addBookmark: async ({ input }) => {
+        const users = client.db().collection('users');
 
+        await users.updateOne(
+            { id: input.userID },
+            { $addToSet: { bookmarks: { type: input.type, id: input.id } } }
+        )
+
+        return { type: input.type, id: input.id }
+    },
 
     getSlider: async (props) => {
         const { page, genre } = props;

@@ -1,13 +1,13 @@
-import * as React from 'react';
-import * as ReactDOM from "react-dom/client";
+import React from 'react';
+import ReactDOM from "react-dom/client";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import './styles/index.scss'
 
-import {RouterProvider} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import router from "./router/router";
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 import store from "./redux/store";
 
 const client = new ApolloClient({
@@ -21,7 +21,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <Provider store={store}>
         <ApolloProvider client={client}>
-            <RouterProvider router={router}/>
+            <RouterProvider router={router} />
         </ApolloProvider>
     </Provider>
 );

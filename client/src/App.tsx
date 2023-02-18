@@ -30,6 +30,7 @@ const App: React.FC = () => {
                     dispatch(setUser(data.checkUser));
                 }
             })
+            console.log('checked')
         }
     }, []);
 

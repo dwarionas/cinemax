@@ -18,6 +18,7 @@ const NavAside: React.FC = () => {
                 email: '',
                 id: '',
                 role: '',
+                bookmarks: []
             }))
         } else {
             console.log('not auth')
@@ -41,6 +42,7 @@ const NavAside: React.FC = () => {
 
                 <div
                     className={'app__nav__wrapper__item'}
+                    onClick={() => { }}
                 >
                     <ProfileIcon color={'#56585C'} />
                 </div>
@@ -70,8 +72,8 @@ const NavAside: React.FC = () => {
                         onClick={() => logout()}
                     >
                         <LogoutIcon color={'#56585C'} />
-                    </div>}
-
+                    </div>
+                }
             </div>
         </nav>
     );

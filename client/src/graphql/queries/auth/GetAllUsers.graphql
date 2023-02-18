@@ -4,5 +4,9 @@ query GetAllUsers {
         password
         id
         role
+        bookmarks {
+            id
+            type
+        }
     }
 }

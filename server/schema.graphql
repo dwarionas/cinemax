@@ -24,6 +24,7 @@ type userReturn {
     password: String
     id: ID
     role: String
+    bookmarks: [bookmarkReturn]
 }
 
 type authReturn {
@@ -33,6 +34,7 @@ type authReturn {
     password: String
     id: ID
     role: String
+    bookmarks: [bookmarkReturn]
 }
 
 input auth {
@@ -49,7 +51,6 @@ input bookmark {
 type bookmarkReturn {
     type: String
     id: Int
-    userID: String
 }
 
 type User {

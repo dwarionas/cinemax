@@ -2,8 +2,11 @@ query CheckUser($id: String!) {
     checkUser(id: $id) {
         idError
         email
-        password
         id
         role
+        bookmarks {
+            id
+            type
+        }
     }
 }
