@@ -10,5 +10,6 @@ mutation CreateUser($input: auth) {
             id
             type
         }
+        joined
     }
 }

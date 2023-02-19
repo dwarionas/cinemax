@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import '../../styles/search.scss';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
-import { setQuery, setDetailsParams } from "../../redux/slices/searchSlice";
+import { setQuery } from "../../redux/slices/searchSlice";
 
 import { useLazyQuery } from '@apollo/client';
 import getRec from '../../graphql/queries/search/rec.graphql';
@@ -41,7 +41,7 @@ const SearchMain: React.FC = () => {
                 setIsSearchSubmitted(false);
                 refetchRec();
                 navigate('/search');
-                return () => {};
+                return () => { };
             }
 
             setIsSearchSubmitted(true);
@@ -72,7 +72,7 @@ const SearchMain: React.FC = () => {
 
             navigate(`?${queryString}`);
         }
-    }, [ query, currentPage, isSearchSubmitted ]);
+    }, [query, currentPage, isSearchSubmitted]);
 
     const onChangePage = (number: number) => {
         refetchSearch({
@@ -86,10 +86,12 @@ const SearchMain: React.FC = () => {
     const updateSearchValue = React.useCallback(
         debounce((str: string) => {
             if (str.length) {
-                refetchSliced({variables: {
+                refetchSliced({
+                    variables: {
                         searchQuery: str,
                         page: 1,
-                    }})
+                    }
+                })
                 setIsPopupVisible(true);
             } else {
                 setIsPopupVisible(false);
@@ -121,13 +123,9 @@ const SearchMain: React.FC = () => {
         updateSearchValue(event.target.value);
     }
 
-    const onSelectItem = (id: number, type: string) => {
-        dispatch(setDetailsParams({id, type}))
-    }
-
     return (
         <div className={'search__main'}>
-            <Form 
+            <Form
                 onSubmitForm={onSubmitForm}
                 localQuery={localQuery}
                 onChangeInput={onChangeInput}
@@ -143,29 +141,29 @@ const SearchMain: React.FC = () => {
                         <span className={'search__main-content-title'}>Search results:</span>
                         <div className={'search__main-content-wrapper'}>
                             {
-                                search.loading && !search.data ? 
+                                search.loading && !search.data ?
                                     [...Array(20)].map((_, i) => (
-                                        <ItemSkeleton key={i}/>
+                                        <ItemSkeleton key={i} />
                                     ))
-                                : 
+                                    :
                                     search.data?.getSearch.results.map((item: IData) => (
-                                        <SearchItem key={item.id} item={item} onSelectItem={onSelectItem} />
+                                        <SearchItem key={item.id} item={item} />
                                     ))
                             }
                         </div>
                     </div>
-                :
+                    :
                     <div className={'search__main-content'}>
                         <span className={'search__main-content-title'}>Recommendations:</span>
                         <div className={'search__main-content-wrapper'}>
                             {
-                                rec.loading && !rec.data ? 
+                                rec.loading && !rec.data ?
                                     [...Array(20)].map((_, i) => (
-                                        <ItemSkeleton key={i}/>
+                                        <ItemSkeleton key={i} />
                                     ))
-                                : 
+                                    :
                                     rec.data?.getRec.map((item: IData) => (
-                                        <SearchItem key={item.id} item={item} onSelectItem={onSelectItem} />
+                                        <SearchItem key={item.id} item={item} />
                                     ))
                             }
                         </div>

@@ -40,12 +40,11 @@ const NavAside: React.FC = () => {
                     children={({ isActive }) => <SearchIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
-                <div
+                <NavLink
+                    to={'/profile'}
                     className={'app__nav__wrapper__item'}
-                    onClick={() => { }}
-                >
-                    <ProfileIcon color={'#56585C'} />
-                </div>
+                    children={({ isActive }) => <ProfileIcon color={isActive ? '#fff' : '#56585C'} />}
+                />
 
                 <div
                     className={'app__nav__wrapper__item'}

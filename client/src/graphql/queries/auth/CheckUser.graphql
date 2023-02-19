@@ -8,5 +8,6 @@ query CheckUser($id: String!) {
             id
             type
         }
+        joined
     }
 }

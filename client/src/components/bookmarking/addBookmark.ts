@@ -1,11 +1,14 @@
+import { ApolloCache, DefaultContext, MutationFunctionOptions, OperationVariables } from "@apollo/client";
+import { ActionCreatorWithPayload, AnyAction, Dispatch, ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../redux/store";
 import { IBookmark } from "../../types";
 
 interface IProps {
-    bookmark: any;
-    setBookmarks: any;
+    bookmark: (options?: MutationFunctionOptions<any, OperationVariables, DefaultContext, ApolloCache<any>> | undefined) => void;
+    setBookmarks: ActionCreatorWithPayload<IBookmark, "auth/setBookmarks">;
     type: string;
     id: number;
-    dispatch: any;
+    dispatch: ThunkDispatch<RootState, undefined, AnyAction> & Dispatch<AnyAction>;
     userID: string;
 }
 
@@ -20,6 +23,7 @@ export const createBookmark = (props: IProps) => {
                 id,
                 userID
             }
-        }
-    }).then((data: { data: { addBookmark: IBookmark } }) => dispatch(setBookmarks(data.data.addBookmark)))
+        },
+        onCompleted: ({ addBookmark }) => dispatch(setBookmarks(addBookmark))
+    })
 }

@@ -12,10 +12,9 @@ import { setBookmarks } from '../../redux/slices/authSlice';
 
 interface IProps {
     item: IData;
-    onSelectItem: (id: number, type: string) => void;
 }
 
-const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
+const SearchItem: React.FC<IProps> = ({ item }) => {
     const [hover, setHover] = React.useState<boolean>(false);
 
     const type = item.first_air_date ? 'tv' : 'movie'
@@ -28,7 +27,6 @@ const SearchItem: React.FC<IProps> = ({ item, onSelectItem }) => {
 
     return (
         <div
-            onClick={() => onSelectItem(item.id, item.media_type)}
             className={'search__main-content-wrapper-item'}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}

@@ -118,4 +118,5 @@ export interface IUser {
     id: string;
     role: string;
     bookmarks: IBookmark[];
+    joined: string;
 }

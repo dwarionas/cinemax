@@ -13,7 +13,8 @@ const initialState: IState = {
         email: '',
         id: '',
         role: '',
-        bookmarks: []
+        bookmarks: [],
+        joined: ''
     },
     isLogged: false,
     isAuthModalActive: false

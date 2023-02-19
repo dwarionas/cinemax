@@ -20,8 +20,9 @@ startDB();
 const createUser = (input) => {
     const id = String(Date.now());
     const role = 'user';
+    const joined = String(new Date());
     const bookmarks = [];
-    return { id, role, bookmarks, ...input };
+    return { id, role, bookmarks, joined, ...input };
 }
 
 const resolvers = {
