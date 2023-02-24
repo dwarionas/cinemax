@@ -106,19 +106,21 @@ export const PlayIcon: React.FC = ({ }) => {
     )
 }
 
-export const PlusIcon: React.FC<IBtnProps> = ({ classText }) => {
+export const PlusIcon: React.FC = ({ }) => {
     return (
-        <button className={classText}>
-            <svg width={width} height={height} viewBox="0 0 24 24" >
-                <path
-                    fill="#282C31" d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z">
-                </path>
-            </svg>
+        <svg width={width} height={height} viewBox="0 0 24 24" >
+            <path
+                fill="#282C31" d="M5 2h14a1 1 0 011 1v19.143a.5.5 0 01-.766.424L12 18.03l-7.234 4.536A.5.5 0 014 22.143V3a1 1 0 011-1zm13 2H6v15.432l6-3.761 6 3.761V4z">
+            </path>
+        </svg>
+    )
+}
 
-            {/*<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={width} height={height}>*/}
-            {/*    <path fill="#fff" d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"/>*/}
-            {/*</svg>*/}
-        </button>
+export const RemoveIcon: React.FC = ({ }) => {
+    return (
+        <svg width={width} height={height} viewBox="0 0 24 24" >
+            <path fill="#282C31" d="M19,2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V5A3,3,0,0,0,19,2Zm1,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4H19a1,1,0,0,1,1,1Zm-4-8H8a1,1,0,0,0,0,2h8a1,1,0,0,0,0-2Z" />
+        </svg>
     )
 }
 

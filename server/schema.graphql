@@ -45,13 +45,21 @@ input auth {
 }
 
 input bookmark {
-    type: String!
+    title: String
+    name: String
+    poster_path: String
+    first_air_date: String
+    release_date: String
     id: Int!
     userID: String!
 }
 
 type bookmarkReturn {
-    type: String
+    title: String
+    name: String
+    poster_path: String
+    first_air_date: String
+    release_date: String
     id: Int
 }
 

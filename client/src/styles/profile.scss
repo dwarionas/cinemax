@@ -1,6 +1,7 @@
 @import './variables';
 
 .profile {
+    overflow: auto;
     height: 100%;
     width: 100%;
     display: flex;
@@ -14,6 +15,13 @@
             color: $dark;
             font-size: 30px;
             margin-bottom: 20px;
+        }
+
+        &-content {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
         }
     }
 

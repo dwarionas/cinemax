@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IData } from "../../types";
-import { PlayIcon, PlusIcon } from '../Helpers';
+import { IBookmark, IData } from "../../types";
+import { PlayIcon, PlusIcon, RemoveIcon } from '../Helpers';
 import { createBookmark } from '../bookmarking/addBookmark';
 
 import { useMutation } from '@apollo/client';
@@ -11,19 +11,30 @@ import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql
 import { setBookmarks } from '../../redux/slices/authSlice';
 
 interface IProps {
-    item: IData;
+    item: IData | IBookmark;
 }
 
 const SearchItem: React.FC<IProps> = ({ item }) => {
     const [hover, setHover] = React.useState<boolean>(false);
 
-    const type = item.first_air_date ? 'tv' : 'movie'
-    const id = item.id;
-
     const dispatch = useAppDispatch();
     const userID = useSelector((state: RootState) => state.auth.user.id)
+    const bookmarks = useSelector((state: RootState) => state.auth.user.bookmarks)
 
     const [bookmark] = useMutation(addBookmark);
+
+    const bookmarkData = {
+        bookmark,
+        setBookmarks,
+        dispatch,
+        id: item.id,
+        name: item.name as string,
+        poster_path: item.poster_path as string,
+        title: item.title,
+        first_air_date: item.first_air_date,
+        release_date: item.release_date,
+        userID
+    }
 
     return (
         <div
@@ -44,9 +55,24 @@ const SearchItem: React.FC<IProps> = ({ item }) => {
                         className={'search__main-content-wrapper-item-container-btn'}>
                         <PlayIcon />
                     </Link>
-                    <div onClick={() => createBookmark({ bookmark, setBookmarks, dispatch, id, type, userID })}>
-                        <PlusIcon classText={'search__main-content-wrapper-item-container-btn'} />
-                    </div>
+                    {bookmarks.find(({ id }) => id === item.id)
+                        ?
+                        <div
+                            className={'search__main-content-wrapper-item-container-btn'}
+                            onClick={() => console.log('removed')}
+                        >
+                            <RemoveIcon />
+
+                        </div>
+                        :
+                        <div
+                            className={'search__main-content-wrapper-item-container-btn'}
+                            onClick={() => createBookmark(bookmarkData)}
+                        >
+                            <PlusIcon />
+
+                        </div>
+                    }
                 </div>
             </div>
 

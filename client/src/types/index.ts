@@ -109,7 +109,11 @@ export interface IDetalizedData extends IData {
 }
 
 export interface IBookmark {
-    type: string;
+    title: string;
+    name: string;
+    poster_path: string;
+    first_air_date?: string;
+    release_date?: string
     id: number;
 }
 

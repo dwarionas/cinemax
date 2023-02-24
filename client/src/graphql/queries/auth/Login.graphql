@@ -7,8 +7,12 @@ query Login($email: String!, $password: String!) {
         email
         role
         bookmarks {
+            title
+            name
+            poster_path
+            first_air_date
+            release_date
             id
-            type
         }
         joined
     }

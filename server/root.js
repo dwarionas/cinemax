@@ -75,10 +75,10 @@ const resolvers = {
 
         await users.updateOne(
             { id: input.userID },
-            { $addToSet: { bookmarks: { type: input.type, id: input.id } } }
+            { $addToSet: { bookmarks: { ...input } } }
         )
 
-        return { type: input.type, id: input.id }
+        return { ...input }
     },
 
     getSlider: async (props) => {

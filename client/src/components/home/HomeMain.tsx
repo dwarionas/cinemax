@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IData } from "../../types";
-import { Rating, PlayIcon, PlusIcon, DetectGenres } from "../Helpers";
+import { Rating, PlayIcon, PlusIcon, RemoveIcon, DetectGenres } from "../Helpers";
 import { createBookmark } from '../bookmarking/addBookmark';
 
 import { useMutation } from '@apollo/client';
@@ -11,14 +11,24 @@ import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql
 import { setBookmarks } from '../../redux/slices/authSlice';
 
 const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
-    const type = item.first_air_date ? 'tv' : 'movie'
-    const id = item.id;
-
     const dispatch = useAppDispatch();
     const userID = useSelector((state: RootState) => state.auth.user.id)
+    const bookmarks = useSelector((state: RootState) => state.auth.user.bookmarks)
 
     const [bookmark] = useMutation(addBookmark);
 
+    const bookmarkData = {
+        bookmark,
+        setBookmarks,
+        dispatch,
+        id: item.id,
+        name: item.name as string,
+        poster_path: item.poster_path as string,
+        title: item.title,
+        first_air_date: item.first_air_date,
+        release_date: item.release_date,
+        userID
+    }
 
     return (
         <div className={'home__main'} >
@@ -29,9 +39,24 @@ const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
                 <Link to={`/${item.first_air_date ? 'tv' : 'movie'}/${item.id}`} className={'home__main-button'}>
                     <PlayIcon />
                 </Link>
-                <div onClick={() => createBookmark({ bookmark, setBookmarks, dispatch, id, type, userID })}>
-                    <PlusIcon classText={'home__main-button'} />
-                </div>
+                {bookmarks.find(({ id }) => id === item.id)
+                    ?
+                    <div
+                        className={'home__main-button'}
+                        onClick={() => console.log('removed')}
+                    >
+                        <RemoveIcon />
+
+                    </div>
+                    :
+                    <div
+                        className={'home__main-button'}
+                        onClick={() => createBookmark(bookmarkData)}
+                    >
+                        <PlusIcon />
+
+                    </div>
+                }
             </div>
             <span className={'home__main-description'}>{item.overview}</span>
         </div>

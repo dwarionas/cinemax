@@ -7,6 +7,7 @@ import login from '../../graphql/queries/auth/Login.graphql';
 
 const Login: React.FC = ({ }) => {
     const dispatch = useAppDispatch();
+
     const { isLogged, user } = useSelector((state: RootState) => state.auth);
 
     const [email, setEmail] = React.useState<string>('');
@@ -27,19 +28,20 @@ const Login: React.FC = ({ }) => {
             }
         }).then(({ data }) => {
             if (data.login.emailError) {
-                setEmailError(true)
-                setMessage('User doesn`t exist')
-                setTimeout(() => setEmailError(false), 1_000)
+                setEmailError(true);
+                setMessage('User doesn`t exist');
+                setTimeout(() => setEmailError(false), 1_000);
             } else if (data.login.passwordError) {
-                setPasswordError(true)
-                setMessage('Invalid password')
-                setTimeout(() => setPasswordError(false), 1_000)
+                setPasswordError(true);
+                setMessage('Invalid password');
+                setTimeout(() => setPasswordError(false), 1_000);
             } else {
                 dispatch(setIsLogged(true));
-                window.localStorage.setItem('isLogged', 'true')
-                window.localStorage.setItem('token', data.login.id)
-                dispatch(setUser(data.login))
-                dispatch(setAuthModalActive(false))
+                window.localStorage.setItem('isLogged', 'true');
+                window.localStorage.setItem('token', data.login.id);
+                dispatch(setUser(data.login));
+                console.log(data.login)
+                dispatch(setAuthModalActive(false));
             }
 
             setPassword('');

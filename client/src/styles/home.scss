@@ -241,7 +241,7 @@
 .rating {
   height: 50px;
   width: 50px;
-  border-radius: 50%;
+  border-radius: 15%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   display: grid;
   place-items: center;
@@ -252,7 +252,7 @@
     width: calc(100% - 8px);
     // background-color: rgb(25, 25, 52) !important;
     color: white;
-    border-radius: 50%;
+    border-radius: 15%;
     display: grid;
     place-items: center;
     font-weight: 600;

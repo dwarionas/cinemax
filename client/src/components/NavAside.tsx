@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, RootState } from "../redux/store";
 import { NavLink } from "react-router-dom";
 import { HomeIcon, ProfileIcon, RecentIcon, SearchIcon, SettingsIcon, LoginIcon, LogoutIcon } from "./Helpers";
@@ -7,7 +8,9 @@ import { setAuthModalActive, setIsLogged, setUser } from "../redux/slices/authSl
 
 const NavAside: React.FC = () => {
     const dispatch = useAppDispatch();
-    const { isLogged } = useSelector((state: RootState) => state.auth)
+    const navigate = useNavigate();
+
+    const isLogged = useSelector((state: RootState) => state.auth.isLogged);
 
     const logout = () => {
         if (window.localStorage.getItem('isLogged') && window.localStorage.getItem('token')) {
@@ -18,8 +21,13 @@ const NavAside: React.FC = () => {
                 email: '',
                 id: '',
                 role: '',
-                bookmarks: []
+                bookmarks: [],
+                joined: ''
             }))
+
+            if (window.location.pathname == '/profile') {
+                navigate('/');
+            }
         } else {
             console.log('not auth')
         }
@@ -40,11 +48,20 @@ const NavAside: React.FC = () => {
                     children={({ isActive }) => <SearchIcon color={isActive ? '#fff' : '#56585C'} />}
                 />
 
-                <NavLink
-                    to={'/profile'}
-                    className={'app__nav__wrapper__item'}
-                    children={({ isActive }) => <ProfileIcon color={isActive ? '#fff' : '#56585C'} />}
-                />
+                {isLogged ?
+                    <NavLink
+                        to={'/profile'}
+                        className={'app__nav__wrapper__item'}
+                        children={({ isActive }) => <ProfileIcon color={isActive ? '#fff' : '#56585C'} />}
+                    />
+                    :
+                    <div
+                        className={'app__nav__wrapper__item'}
+                        onClick={() => dispatch(setAuthModalActive(true))}
+                    >
+                        <ProfileIcon color={'#56585C'} />
+                    </div>
+                }
 
                 <div
                     className={'app__nav__wrapper__item'}

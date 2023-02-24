@@ -1,6 +1,10 @@
 mutation AddBookmark($input: bookmark) {
     addBookmark(input: $input) {
-        type
+        title
+        name
+        poster_path
+        first_air_date
+        release_date
         id
     }
 }
