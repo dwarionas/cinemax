@@ -6,5 +6,6 @@ mutation AddBookmark($input: bookmark) {
         first_air_date
         release_date
         id
+        bookmarkID
     }
 }

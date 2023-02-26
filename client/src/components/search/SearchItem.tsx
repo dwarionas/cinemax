@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { IBookmark, IData } from "../../types";
 import { PlayIcon, PlusIcon, RemoveIcon } from '../Helpers';
 import { createBookmark } from '../bookmarking/addBookmark';
+import { deleteBookmark } from '../bookmarking/removeBookmark';
 
 import { useMutation } from '@apollo/client';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
 import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql';
-import { setBookmarks } from '../../redux/slices/authSlice';
+import removeBookmark from '../../graphql/mutations/bookmarking/RemoveBookmark.graphql';
+import { setBookmarks, removeBookmarks } from '../../redux/slices/authSlice';
 
 interface IProps {
     item: IData | IBookmark;
@@ -20,10 +22,12 @@ const SearchItem: React.FC<IProps> = ({ item }) => {
     const dispatch = useAppDispatch();
     const userID = useSelector((state: RootState) => state.auth.user.id)
     const bookmarks = useSelector((state: RootState) => state.auth.user.bookmarks)
+    const bookmarkID = bookmarks.filter(el => el.id === item.id)[0]?.bookmarkID;
 
+    const [throwBookmark] = useMutation(removeBookmark);
     const [bookmark] = useMutation(addBookmark);
 
-    const bookmarkData = {
+    const createBookmarkData = {
         bookmark,
         setBookmarks,
         dispatch,
@@ -34,6 +38,14 @@ const SearchItem: React.FC<IProps> = ({ item }) => {
         first_air_date: item.first_air_date,
         release_date: item.release_date,
         userID
+    }
+
+    const removeBookmarkData = {
+        bookmarkID: bookmarkID as string,
+        userID,
+        removeBookmarks,
+        throwBookmark,
+        dispatch
     }
 
     return (
@@ -59,7 +71,7 @@ const SearchItem: React.FC<IProps> = ({ item }) => {
                         ?
                         <div
                             className={'search__main-content-wrapper-item-container-btn'}
-                            onClick={() => console.log('removed')}
+                            onClick={() => deleteBookmark(removeBookmarkData)}
                         >
                             <RemoveIcon />
 
@@ -67,7 +79,7 @@ const SearchItem: React.FC<IProps> = ({ item }) => {
                         :
                         <div
                             className={'search__main-content-wrapper-item-container-btn'}
-                            onClick={() => createBookmark(bookmarkData)}
+                            onClick={() => createBookmark(createBookmarkData)}
                         >
                             <PlusIcon />
 

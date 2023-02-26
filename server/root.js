@@ -73,12 +73,26 @@ const resolvers = {
     addBookmark: async ({ input }) => {
         const users = client.db().collection('users');
 
+        const bookmarkID = String(Date.now());
+
         await users.updateOne(
             { id: input.userID },
-            { $addToSet: { bookmarks: { ...input } } }
+            { $addToSet: { bookmarks: { ...input, bookmarkID } } }
         )
 
-        return { ...input }
+        return { ...input, bookmarkID }
+    },
+
+    removeBookmark: async ({ userID, bookmarkID }) => {
+        const users = client.db().collection('users');
+        const user = await users.findOne({ id: userID })
+
+        await users.updateOne(
+            { id: userID },
+            { $pull: { bookmarks: { bookmarkID } } }
+        )
+
+        return { ...user }
     },
 
     getSlider: async (props) => {

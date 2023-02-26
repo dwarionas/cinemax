@@ -11,6 +11,7 @@ query CheckUser($id: String!) {
             first_air_date
             release_date
             id
+            bookmarkID
         }
         joined
     }

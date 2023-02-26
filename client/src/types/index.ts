@@ -115,6 +115,7 @@ export interface IBookmark {
     first_air_date?: string;
     release_date?: string
     id: number;
+    bookmarkID?: string;
 }
 
 export interface IUser {

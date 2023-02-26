@@ -30,6 +30,12 @@ const authSlice = createSlice({
         setBookmarks: (state, action: PayloadAction<IBookmark>) => {
             state.user.bookmarks.push(action.payload);
         },
+        removeBookmarks: (state, action: PayloadAction<string>) => {
+            let index = state.user.bookmarks.findIndex(obj => obj.bookmarkID === action.payload);
+            if (index !== -1) {
+                state.user.bookmarks.splice(index, 1);
+            }
+        },
         setIsLogged: (state, action: PayloadAction<boolean>) => {
             state.isLogged = action.payload;
         },
@@ -39,5 +45,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setUser, setBookmarks, setIsLogged, setAuthModalActive } = authSlice.actions;
+export const { setUser, setBookmarks, removeBookmarks, setIsLogged, setAuthModalActive } = authSlice.actions;
 export default authSlice.reducer;

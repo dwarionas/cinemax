@@ -3,18 +3,22 @@ import { Link } from 'react-router-dom';
 import { IData } from "../../types";
 import { Rating, PlayIcon, PlusIcon, RemoveIcon, DetectGenres } from "../Helpers";
 import { createBookmark } from '../bookmarking/addBookmark';
+import { deleteBookmark } from '../bookmarking/removeBookmark';
 
 import { useMutation } from '@apollo/client';
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
 import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql';
-import { setBookmarks } from '../../redux/slices/authSlice';
+import removeBookmark from '../../graphql/mutations/bookmarking/RemoveBookmark.graphql';
+import { setBookmarks, removeBookmarks } from '../../redux/slices/authSlice';
 
 const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
     const dispatch = useAppDispatch();
     const userID = useSelector((state: RootState) => state.auth.user.id)
     const bookmarks = useSelector((state: RootState) => state.auth.user.bookmarks)
+    const bookmarkID = bookmarks.filter(el => el.id === item.id)[0]?.bookmarkID;
 
+    const [throwBookmark] = useMutation(removeBookmark);
     const [bookmark] = useMutation(addBookmark);
 
     const bookmarkData = {
@@ -30,6 +34,14 @@ const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
         userID
     }
 
+    const removeBookmarkData = {
+        bookmarkID: bookmarkID as string,
+        userID,
+        removeBookmarks,
+        throwBookmark,
+        dispatch
+    }
+
     return (
         <div className={'home__main'} >
             <span className={'home__main-header'}>{item.title || item.name}</span>
@@ -43,7 +55,7 @@ const HomeMain: React.FC<{ item: IData }> = ({ item }) => {
                     ?
                     <div
                         className={'home__main-button'}
-                        onClick={() => console.log('removed')}
+                        onClick={() => deleteBookmark(removeBookmarkData)}
                     >
                         <RemoveIcon />
 

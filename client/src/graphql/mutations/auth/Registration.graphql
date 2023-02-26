@@ -13,6 +13,7 @@ mutation CreateUser($input: auth) {
             first_air_date
             release_date
             id
+            bookmarkID
         }
         joined
     }

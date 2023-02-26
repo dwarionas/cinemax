@@ -6,14 +6,16 @@ import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import getDetails from '../../graphql/queries/single/details.graphql';
 import getDiscover from '../../graphql/queries/single/discover.graphql';
 import addBookmark from '../../graphql/mutations/bookmarking/AddBookmark.graphql';
+import removeBookmark from '../../graphql/mutations/bookmarking/RemoveBookmark.graphql';
 import { IData, IDetalizedData, IGenre } from '../../types';
 
 import { PlayIcon, RemoveIcon, PlusIcon, Rating } from '../Helpers';
 import { createBookmark } from '../bookmarking/addBookmark';
+import { deleteBookmark } from '../bookmarking/removeBookmark';
 
 import { useSelector } from "react-redux";
 import { useAppDispatch, RootState } from "../../redux/store";
-import { setBookmarks } from '../../redux/slices/authSlice';
+import { setBookmarks, removeBookmarks } from '../../redux/slices/authSlice';
 
 const Single: React.FC = () => {
     const params = useParams();
@@ -37,6 +39,7 @@ const Single: React.FC = () => {
     const userID = useSelector((state: RootState) => state.auth.user.id)
     const bookmarks = useSelector((state: RootState) => state.auth.user.bookmarks)
 
+    const [throwBookmark] = useMutation(removeBookmark);
     const [bookmark] = useMutation(addBookmark);
 
     return (
@@ -64,7 +67,13 @@ const Single: React.FC = () => {
                                             ?
                                             <div
                                                 className={'home__main-button'}
-                                                onClick={() => console.log('removed')}
+                                                onClick={() => deleteBookmark({
+                                                    bookmarkID: bookmarks.filter(el => el.id === item.id)[0]?.bookmarkID as string,
+                                                    userID,
+                                                    removeBookmarks,
+                                                    throwBookmark,
+                                                    dispatch
+                                                })}
                                             >
                                                 <RemoveIcon />
 
