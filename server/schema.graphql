@@ -1,0 +1,151 @@
+type Query {
+    getSlider(page: Int!, genre: String!): [Data]!
+    getGenres: [Genre]!
+
+    getRec: [Data]!
+    getSearch(searchQuery: String!, page: Int!): Global!
+    getSliced(searchQuery: String!, page: Int!): [Data]!
+    getDetails(type: String!, id: Int!): [Data]!
+    getDiscover(genres: String!): [Data]!
+
+    getAllUsers: [User]!
+    checkUser(id: String!): userReturn
+    login(email: String!, password: String!): authReturn
+}
+
+type Mutation {
+    createUser(input: auth): authReturn
+    addBookmark(input: bookmark): bookmarkReturn
+    removeBookmark(bookmarkID: String!, userID: String!): User
+}
+
+type userReturn {
+    idError: Boolean!
+    email: String
+    password: String
+    id: ID
+    role: String
+    bookmarks: [bookmarkReturn]
+    joined: String
+}
+
+type authReturn {
+    emailError: Boolean
+    passwordError: Boolean
+    email: String
+    password: String
+    id: ID
+    role: String
+    bookmarks: [bookmarkReturn]
+    joined: String
+}
+
+input auth {
+    email: String!
+    password: String!
+}
+
+input bookmark {
+    title: String
+    name: String
+    poster_path: String
+    first_air_date: String
+    release_date: String
+    id: Int!
+    userID: String!
+}
+
+type bookmarkReturn {
+    title: String
+    name: String
+    poster_path: String
+    first_air_date: String
+    release_date: String
+    id: Int
+    bookmarkID: String
+}
+
+type User {
+    email: String
+    password: String
+    id: ID
+    role: String
+    bookmarks: [bookmarkReturn]
+    joined: String
+}
+
+
+
+
+
+
+
+
+
+type Global {
+    page: Int
+    total_pages: Int
+    total_results: Int
+    results: [Data]
+}
+
+type Genre {
+    id: Int
+    name: String
+}
+
+type ProdCountries {
+    name: String
+}
+
+type ProdCompanies {
+    name: String
+}
+
+type CreatedBy {
+    name: String
+    profile_path: String
+    id: Int
+}
+
+type Languages {
+    english_name: String
+}
+
+type Collection {
+    name: String
+    poster_path: String
+    id: Int
+}
+
+type Data {
+    adult: Boolean
+    backdrop_path: String
+    genre_ids: [Int]
+    id: Int
+    original_language: String
+    original_name: String
+    original_title: String
+    overview: String
+    popularity: Float
+    poster_path: String
+    release_date: String
+    title: String
+    video: Boolean
+    vote_average: Float
+    vote_count: Int
+    name: String
+    origin_country: [String]
+    media_type: String
+    first_air_date: String
+    genres: [Genre]
+    production_countries: [ProdCountries]
+    spoken_languages: [Languages]
+    created_by: [CreatedBy]
+    runtime: Int
+    episode_run_time: [Int]
+    production_companies: [ProdCompanies]
+    belongs_to_collection: Collection
+    tagline: String
+}
+

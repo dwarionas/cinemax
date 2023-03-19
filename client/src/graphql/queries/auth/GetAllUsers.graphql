@@ -1,0 +1,12 @@
+query GetAllUsers {
+    getAllUsers {
+        email
+        password
+        id
+        role
+        bookmarks {
+            id
+            type
+        }
+    }
+}

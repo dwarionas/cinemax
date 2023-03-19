@@ -1,0 +1,5 @@
+mutation RemoveBookmark($bookmarkID: String!, $userID: String!) {
+    removeBookmark(bookmarkID: $bookmarkID, userID: $userID) {
+        id
+    }
+}

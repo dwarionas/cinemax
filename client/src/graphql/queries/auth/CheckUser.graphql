@@ -1,0 +1,18 @@
+query CheckUser($id: String!) {
+    checkUser(id: $id) {
+        idError
+        email
+        id
+        role
+        bookmarks {
+            title
+            name
+            poster_path
+            first_air_date
+            release_date
+            id
+            bookmarkID
+        }
+        joined
+    }
+}

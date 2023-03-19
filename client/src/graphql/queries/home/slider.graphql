@@ -1,0 +1,14 @@
+query GetSliderData($page: Int!, $genre: String!) {
+    getSlider(page: $page, genre: $genre) {
+        title
+        name
+        id
+        overview
+        poster_path
+        vote_average
+        genre_ids
+        backdrop_path
+        media_type
+        first_air_date
+    }
+}

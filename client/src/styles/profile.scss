@@ -1,0 +1,50 @@
+// @import './variables';
+
+.profile {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 25px;
+
+    &__bookmarks {
+        width: 75%;
+
+        &-title {
+            color: var(--base);
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        &-content {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+    }
+
+    &__divider {
+        margin: 0 25px;
+        height: 100%;
+        width: 0.1px;
+        background-color: var(--grey);
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+
+        &-text {
+            font-size: 18px;
+            color: gray;
+            margin-bottom: 20px;
+
+            span {
+                color: var(--base);
+            }
+        }
+    }
+}

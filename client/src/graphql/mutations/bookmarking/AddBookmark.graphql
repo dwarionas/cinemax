@@ -1,0 +1,11 @@
+mutation AddBookmark($input: bookmark) {
+    addBookmark(input: $input) {
+        title
+        name
+        poster_path
+        first_air_date
+        release_date
+        id
+        bookmarkID
+    }
+}

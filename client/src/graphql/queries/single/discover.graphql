@@ -1,0 +1,10 @@
+query GetDiscoverData($genres: String!) {
+    getDiscover(genres: $genres) {
+        title
+        name
+        id
+        poster_path
+        vote_average
+        first_air_date
+    }
+}

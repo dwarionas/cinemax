@@ -1,0 +1,35 @@
+* {
+  font-family: 'Outfit', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body.preload * {
+  animation-duration: 0s !important;
+  -webkit-animation-duration: 0s !important;
+}
+
+:root {
+  --base: #282C31; /* dark */
+  --secondary: #f2f3f4; /* light */
+  --darker-middle: #87314e;
+  --lighter-middle: #bb394f;
+  --grey: #dcdcdc;
+}
+
+[theme="dark"] {
+  --base: #F6E8EA;
+  --secondary: #282C31;
+  --darker-middle: #87314e;
+  --lighter-middle: #bb394f;
+  --grey: rgb(86, 88, 92);;
+}
+
+@import './app.scss';
+@import './auth.scss';
+@import './home.scss';
+@import './profile.scss';
+@import './recent.scss';
+@import './search.scss';
+@import './single.scss'; 

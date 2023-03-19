@@ -1,0 +1,38 @@
+query GetDetailsData($type: String!, $id: Int!) {
+    getDetails(type: $type, id: $id) {
+        title
+        name
+        id
+        poster_path
+        backdrop_path
+        genres {
+            name
+        }
+        first_air_date
+        release_date
+        production_countries {
+            name
+        }
+        spoken_languages {
+            english_name
+        }
+        vote_average
+        created_by {
+            name
+            profile_path
+            id
+        }
+        runtime
+        episode_run_time
+        production_companies {
+            name
+        }
+        overview
+        belongs_to_collection {
+            name
+            poster_path
+            id
+        }
+        tagline
+    }
+}
