@@ -79,15 +79,15 @@ const NavAside: React.FC = () => {
                     </div>
                 }
 
-                <div
-                    className={'app__nav__wrapper__item'}
-                >
-                    <SettingsIcon color={'#56585C'} />
-                </div>
-
-                <ToggleMode/>
+                {/*<div*/}
+                {/*    className={'app__nav__wrapper__item'}*/}
+                {/*>*/}
+                {/*    <SettingsIcon color={'#56585C'} />*/}
+                {/*</div>*/}
             </div>
             <div className={'app__nav__logout'}>
+                <ToggleMode/>
+
                 {!isLogged ?
                     <div
                         className={'app__nav__wrapper__item'}

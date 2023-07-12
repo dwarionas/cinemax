@@ -10,9 +10,9 @@ const API_KEY = process.env.API_KEY;
 (async () => {
     try {
         await client.connect();
-        console.log('db connected');
+        console.log('db connected successfully');
     } catch (error) {
-        console.log('error ', error);
+        console.log('Mongo error: ', error);
     }
 })();
 

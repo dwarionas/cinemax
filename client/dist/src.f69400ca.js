@@ -76677,30 +76677,6 @@ var addObj = recentSlice.actions.addObj;
 exports.addObj = addObj;
 var _default = recentSlice.reducer;
 exports.default = _default;
-},{"@reduxjs/toolkit":"../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js"}],"redux/slices/modeSlice.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setDarkTheme = exports.default = void 0;
-var _toolkit = require("@reduxjs/toolkit");
-var initialState = {
-  darkMode: false
-};
-var modeSlice = (0, _toolkit.createSlice)({
-  name: 'mode',
-  initialState: initialState,
-  reducers: {
-    setDarkTheme: function setDarkTheme(state, action) {
-      state.darkMode = action.payload;
-    }
-  }
-});
-var setDarkTheme = modeSlice.actions.setDarkTheme;
-exports.setDarkTheme = setDarkTheme;
-var _default = modeSlice.reducer;
-exports.default = _default;
 },{"@reduxjs/toolkit":"../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js"}],"redux/store.ts":[function(require,module,exports) {
 "use strict";
 
@@ -76716,14 +76692,12 @@ var _homeSlice = _interopRequireDefault(require("./slices/homeSlice"));
 var _searchSlice = _interopRequireDefault(require("./slices/searchSlice"));
 var _authSlice = _interopRequireDefault(require("./slices/authSlice"));
 var _recentSlice = _interopRequireDefault(require("./slices/recentSlice"));
-var _modeSlice = _interopRequireDefault(require("./slices/modeSlice"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var rootReducer = (0, _toolkit.combineReducers)({
   home: _homeSlice.default,
   search: _searchSlice.default,
   auth: _authSlice.default,
-  recent: _recentSlice.default,
-  mode: _modeSlice.default
+  recent: _recentSlice.default
 });
 var persistConfig = {
   key: 'root',
@@ -76750,7 +76724,7 @@ var useAppDispatch = function useAppDispatch() {
   return (0, _reactRedux.useDispatch)();
 };
 exports.useAppDispatch = useAppDispatch;
-},{"@reduxjs/toolkit":"../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js","react-redux":"../node_modules/react-redux/es/index.js","redux-persist":"../node_modules/redux-persist/es/index.js","redux-persist/lib/storage":"../node_modules/redux-persist/lib/storage/index.js","./slices/homeSlice":"redux/slices/homeSlice.ts","./slices/searchSlice":"redux/slices/searchSlice.ts","./slices/authSlice":"redux/slices/authSlice.ts","./slices/recentSlice":"redux/slices/recentSlice.ts","./slices/modeSlice":"redux/slices/modeSlice.ts"}],"graphql/queries/auth/CheckUser.graphql":[function(require,module,exports) {
+},{"@reduxjs/toolkit":"../node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js","react-redux":"../node_modules/react-redux/es/index.js","redux-persist":"../node_modules/redux-persist/es/index.js","redux-persist/lib/storage":"../node_modules/redux-persist/lib/storage/index.js","./slices/homeSlice":"redux/slices/homeSlice.ts","./slices/searchSlice":"redux/slices/searchSlice.ts","./slices/authSlice":"redux/slices/authSlice.ts","./slices/recentSlice":"redux/slices/recentSlice.ts"}],"graphql/queries/auth/CheckUser.graphql":[function(require,module,exports) {
 module.exports = {
   "kind": "Document",
   "definitions": [{
@@ -77323,9 +77297,6 @@ var _jsxRuntime = require("react/jsx-runtime");
 var _react = _interopRequireDefault(require("react"));
 var _Helpers = require("./Helpers");
 require("../styles/mode.scss");
-var _reactRedux = require("react-redux");
-var _store = require("../redux/store");
-var _modeSlice = require("../redux/slices/modeSlice");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var __assign = void 0 && (void 0).__assign || function () {
   __assign = Object.assign || function (t) {
@@ -77338,53 +77309,60 @@ var __assign = void 0 && (void 0).__assign || function () {
   return __assign.apply(this, arguments);
 };
 var ToggleMode = function ToggleMode() {
-  var dispatch = (0, _store.useAppDispatch)();
-  var isDarkMode = (0, _reactRedux.useSelector)(function (state) {
-    return state.mode.darkMode;
-  });
+  var _a = _react.default.useState(false),
+    isChecked = _a[0],
+    setIsChecked = _a[1];
   var setDarkMode = function setDarkMode() {
     var _a;
     (_a = document.querySelector('body')) === null || _a === void 0 ? void 0 : _a.setAttribute('theme', 'dark');
-    dispatch((0, _modeSlice.setDarkTheme)(true));
+    window.localStorage.setItem('mode', 'dark');
   };
   var setLightMode = function setLightMode() {
     var _a;
     (_a = document.querySelector('body')) === null || _a === void 0 ? void 0 : _a.setAttribute('theme', 'light');
-    dispatch((0, _modeSlice.setDarkTheme)(false));
+    window.localStorage.setItem('mode', 'light');
   };
+  _react.default.useEffect(function () {
+    if (window.localStorage.getItem('mode') === 'dark') {
+      setIsChecked(true);
+      setDarkMode();
+    } else if (window.localStorage.getItem('mode') === 'light') {
+      setIsChecked(false);
+      setLightMode();
+    }
+  }, []);
   var toggleMode = function toggleMode(e) {
+    setIsChecked(e.target.checked);
     if (e.target.checked) {
       setDarkMode();
     } else {
       setLightMode();
     }
   };
-  _react.default.useEffect(function () {
-    if (isDarkMode) {
-      setDarkMode();
-    } else {
-      setLightMode();
-    }
-  }, [isDarkMode]);
-  return (0, _jsxRuntime.jsxs)("div", __assign({
-    className: 'dark_mode'
+  return (0, _jsxRuntime.jsx)("div", __assign({
+    className: 'mode'
   }, {
-    children: [(0, _jsxRuntime.jsx)("input", {
-      type: "checkbox",
-      className: 'dark_mode_input',
-      onChange: toggleMode,
-      id: 'darkmode-toggle'
-    }), (0, _jsxRuntime.jsxs)("label", __assign({
-      className: 'dark_mode_label',
-      htmlFor: 'darkmode-toggle'
+    children: (0, _jsxRuntime.jsxs)("div", __assign({
+      className: 'dark_mode'
     }, {
-      children: [(0, _jsxRuntime.jsx)(_Helpers.Sun, {}), (0, _jsxRuntime.jsx)(_Helpers.Moon, {})]
-    }))]
+      children: [(0, _jsxRuntime.jsx)("input", {
+        type: "checkbox",
+        className: 'dark_mode_input',
+        onChange: toggleMode,
+        id: 'darkmode-toggle',
+        checked: isChecked
+      }), (0, _jsxRuntime.jsxs)("label", __assign({
+        className: 'dark_mode_label',
+        htmlFor: 'darkmode-toggle'
+      }, {
+        children: [(0, _jsxRuntime.jsx)(_Helpers.Sun, {}), (0, _jsxRuntime.jsx)(_Helpers.Moon, {})]
+      }))]
+    }))
   }));
 };
 var _default = ToggleMode;
 exports.default = _default;
-},{"react/jsx-runtime":"../node_modules/react/jsx-runtime.js","react":"../node_modules/react/index.js","./Helpers":"components/Helpers.tsx","../styles/mode.scss":"styles/mode.scss","react-redux":"../node_modules/react-redux/es/index.js","../redux/store":"redux/store.ts","../redux/slices/modeSlice":"redux/slices/modeSlice.ts"}],"components/NavAside.tsx":[function(require,module,exports) {
+},{"react/jsx-runtime":"../node_modules/react/jsx-runtime.js","react":"../node_modules/react/index.js","./Helpers":"components/Helpers.tsx","../styles/mode.scss":"styles/mode.scss"}],"components/NavAside.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -77495,17 +77473,11 @@ var NavAside = function NavAside() {
         children: (0, _jsxRuntime.jsx)(_Helpers.RecentIcon, {
           color: '#56585C'
         })
-      })), (0, _jsxRuntime.jsx)("div", __assign({
-        className: 'app__nav__wrapper__item'
-      }, {
-        children: (0, _jsxRuntime.jsx)(_Helpers.SettingsIcon, {
-          color: '#56585C'
-        })
-      })), (0, _jsxRuntime.jsx)(_ToggleMode.default, {})]
-    })), (0, _jsxRuntime.jsx)("div", __assign({
+      }))]
+    })), (0, _jsxRuntime.jsxs)("div", __assign({
       className: 'app__nav__logout'
     }, {
-      children: !isLogged ? (0, _jsxRuntime.jsx)("div", __assign({
+      children: [(0, _jsxRuntime.jsx)(_ToggleMode.default, {}), !isLogged ? (0, _jsxRuntime.jsx)("div", __assign({
         className: 'app__nav__wrapper__item',
         onClick: function onClick() {
           return dispatch((0, _authSlice.setAuthModalActive)(true));
@@ -77523,7 +77495,7 @@ var NavAside = function NavAside() {
         children: (0, _jsxRuntime.jsx)(_Helpers.LogoutIcon, {
           color: '#56585C'
         })
-      }))
+      }))]
     }))]
   }));
 };
@@ -95656,7 +95628,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36007" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49818" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

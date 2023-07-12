@@ -944,8 +944,8 @@
 }
 * {
   font-family: 'Outfit', sans-serif;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -969,9 +969,25 @@ body.preload * {
   --lighter-middle: #bb394f;
   --grey: rgb(86, 88, 92);;
 } 
+.mode {
+  margin-bottom: 20px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 .dark_mode {
-  margin-top: -20px;
-  margin-left: 10px;
+  transform: rotate3d(0, 0, 1, 90deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dark_mode:active {
+  border-radius: 0;
+  background-color: transparent;
 }
 .dark_mode_label {
   width: 65px;
@@ -1006,7 +1022,8 @@ body.preload * {
   z-index: 100;
 }
 .dark_mode_label svg.sun {
-  left: 5px;
+  left: 5.5px;
+  top: 5.5px;
   fill: #fff;
   transition: 0.3s;
 }
@@ -1014,6 +1031,7 @@ body.preload * {
   left: 40px;
   fill: #7e7e7e;
   transition: 0.3s;
+  transform: rotate3d(0, 0, 1, -90deg);
 }
 .dark_mode_input {
   width: 0;

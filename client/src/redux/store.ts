@@ -10,20 +10,18 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import storage from 'redux-persist/lib/storage';
 
 import home from "./slices/homeSlice";
 import search from "./slices/searchSlice";
 import auth from "./slices/authSlice";
 import recent from "./slices/recentSlice";
-import mode from "./slices/modeSlice";
 
 const rootReducer = combineReducers({
     home,
     search,
     auth,
     recent,
-    mode
 });
 
 const persistConfig = {
